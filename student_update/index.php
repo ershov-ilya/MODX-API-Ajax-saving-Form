@@ -15,17 +15,12 @@ ini_set("display_errors", 1);
 if(isset($_GET['debug'])){define('DEBUG',true);}
 else{define('DEBUG',false);}
 
-if($_GET['action']=='update'){define('ACTION','update');}
-elseif($_GET['action']=='new'){define('ACTION','new');}
-elseif($_GET['action']=='check'){define('ACTION','check');}
-else{define('ACTION','none');}
-
 define('MODX_API_MODE', true);
 require('../../index.php');
+$response=array();
 
 /** @var modX $modx */
 /** @var modObject $obj */
-//print $modx->parseChunk('hello_world', array());
 
 $prop=array(
     'updated'=>time(),
