@@ -2,7 +2,13 @@
 function askApi(){
     var name = $(this).get(0).tagName;
     var id = $(this).attr("name");
-    var val = $(this).val();
+    var val;
+    if(name=='select') {
+        val=$(this).find('option:selected').text();
+    }
+    else{
+        val = $(this).val();
+    }
     console.log('changed '+ name+' field: '+id+' value:'+val);
 
     switch(id)

@@ -1,7 +1,7 @@
 /**
  * Created by IErshov on 11.12.2014.
  */
-var docState={data:{},changes:false,debug:true};
+var docState={data:{interests:{}},changes:false,debug:true};
 var apicontrol={};
 
 docState.check = function(){
@@ -45,6 +45,7 @@ apicontrol.create=function(data){
         console.log(response);
         docState.data.id=response.id;
         docState.data.verify=response.verify;
+        apicontrol.checkResponse(response);
     };
 
     $.ajax({
@@ -56,22 +57,22 @@ apicontrol.create=function(data){
     });
 };
 
-apicontrol.check=function(id){
+apicontrol.check=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/check/";
-    var success = function (response){ console.log(response); };
+    var success = function (response){ console.log(response); apicontrol.checkResponse(response); };
 
     $.ajax({
         type: "POST",
         dataType: "json",
         url: url,
-        data: {id:id},
+        data: data,
         success: success
     });
 };
 
 apicontrol.update=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/update/";
-    var success = function (response){ console.log(response); };
+    var success = function (response){ console.log(response);  apicontrol.checkResponse(response);};
 
     $.ajax({
         type: "POST",
@@ -85,6 +86,7 @@ apicontrol.update=function(data){
 apicontrol.checkChanges=function(){
     if(docState.changes){
         console.log('changes found');
+        var result=0;
         // Отправка данных в API
         if(docState.data.id===undefined || docState.data.verify===undefined)
         {
@@ -111,3 +113,13 @@ function supports_html5_storage() {
         return false;
     }
 }
+
+apicontrol.checkResponse=function(response) {
+    if(response.status=='fail'){
+        console.log('Response: "failed"');
+        if(response.message=='Wrong verify') {
+            console.log('Сброс формы');
+            docState.reset();
+        }
+    }
+};

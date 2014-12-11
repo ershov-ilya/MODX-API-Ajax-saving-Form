@@ -29,11 +29,11 @@ $response=array();
 
 $prop=array(
     'updated'=>time(),
-    'name' => 'empty_name',
-    'secondname' => 'empty_secondname',
+    'name' => '',
+    'secondname' => '',
     'patronymic'=>'',
-    'dob'=>'',
-    'gender'=>'',
+    'dob'=>'0',
+    'gender'=>'0',
     'studgroup'=>'',
     'affiliate'=>'',
     'phone'=>'',
@@ -47,6 +47,8 @@ $prop=array(
 );
 
 $prop=array_merge($prop, $_REQUEST);
+$prop['dob']=date_create($prop['birth_year']."-".$prop['birth_month']."-".$prop['birth_day']);
+//$modx->log(MODX_LOG_LEVEL_WARN,'DOB: '.$prop['dob']);
 if(DEBUG) print_r($prop);
 
 $filter=array();
@@ -66,13 +68,14 @@ if($response['status']=='OK')
     $data = $object->toArray();
 }
 
-// Обход проверки
+/* Обход проверки
 $response['status']='OK';
 $response['data']=$data;
-/* Проверка хэша
+/**/
+// Проверка хэша
 // id=18&verify=66e7cb9c266a7e495b89eb36363d44bd8c11c2d51b5fddfc0de780a1358d6685
 if($response['status']=='OK') {
-    if (($data['sign'] == $_GET['verify'])) {
+    if (($data['sign'] == $_REQUEST['verify'])) {
         $response['status'] = 'OK';
         $response['data'] = $data;
     } else {

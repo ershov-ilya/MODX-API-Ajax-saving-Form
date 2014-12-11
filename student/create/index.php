@@ -31,11 +31,14 @@ require('../../../../index.php');
 $prop=array(
     'sign' => hash('sha256', rand()),
     'updated'=>time(),
-    'name' => 'empty name',
-    'secondname' => 'empty secondname',
+    'name' => '',
+    'secondname' => '',
     'patronymic'=>'',
-    'dob'=>'',
-    'gender'=>'',
+    'birth_day' => '0',
+    'birth_month' => '0',
+    'birth_year' => '0',
+    'dob'=>'0',
+    'gender'=>'0',
     'studgroup'=>'',
     'affiliate'=>'',
     'phone'=>'',
@@ -47,8 +50,8 @@ $prop=array(
     'vkcomID'=>'',
     'interests'=>''
 );
-
 $prop=array_merge($prop, $_REQUEST);
+$prop['dob']=date_create($prop['birth_year']."-".$prop['birth_month']."-".$prop['birth_day']);
 if(DEBUG) print_r($prop);
 
 $object = $modx->newObject('StudentProfile');
