@@ -30,6 +30,7 @@ docState.load = function(){
     this.data = obj;
     if(this.debug) console.log('Load done');
     if(this.debug) console.log(this.data);
+    // TODO: Заполнение всех полей
 };
 
 docState.reset = function(){
@@ -40,7 +41,11 @@ docState.reset = function(){
 
 apicontrol.create=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/create/";
-    var success = function (response){ console.log(response.data); };
+    var success = function (response){
+        console.log(response);
+        docState.data.id=response.id;
+        docState.data.verify=response.verify;
+    };
 
     $.ajax({
         type: "POST",
@@ -53,7 +58,7 @@ apicontrol.create=function(data){
 
 apicontrol.check=function(id){
     var url = "http://crm.syndev.ru/api/v1/student/check/";
-    var success = function (response){ console.log(response.data); };
+    var success = function (response){ console.log(response); };
 
     $.ajax({
         type: "POST",
@@ -66,7 +71,7 @@ apicontrol.check=function(id){
 
 apicontrol.update=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/update/";
-    var success = function (response){ console.log(response.data); };
+    var success = function (response){ console.log(response); };
 
     $.ajax({
         type: "POST",
@@ -80,17 +85,23 @@ apicontrol.update=function(data){
 apicontrol.checkChanges=function(){
     if(docState.changes){
         console.log('changes found');
-        // TODO: отправка данных в API
-        // TODO: проверка наличия id и verify
-        // TODO: создание нового объекта
-        // TODO: обновление существующего
+        // Отправка данных в API
+        if(docState.data.id===undefined || docState.data.verify===undefined)
+        {
+            apicontrol.create(docState.data);
+        }else{
+            apicontrol.update(docState.data);
+        }
         docState.changes=false;
+        return true;
     }
+    return false;
 };
 
 apicontrol.start=function(){
     setInterval(this.checkChanges, 500);
     console.log('checkchanges start');
+    /**/
 };
 
 function supports_html5_storage() {

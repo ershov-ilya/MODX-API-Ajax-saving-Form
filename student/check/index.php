@@ -47,13 +47,13 @@ if(DEBUG)
     print_r($data);
 }
 
-// Обход проверки
+/* Обход проверки
 $response['status']='OK';
 if($data) $response['data']=$data;
 /**/
-/* Проверка хэша
+// Проверка хэша
 // id=18&verify=66e7cb9c266a7e495b89eb36363d44bd8c11c2d51b5fddfc0de780a1358d6685
-if($data['sign'] == $_GET['verify'])
+if($data['sign'] == $_REQUEST['verify'])
 {
     $response['status']='OK';
     $response['data']=$data;

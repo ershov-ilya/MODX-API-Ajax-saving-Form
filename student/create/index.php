@@ -74,6 +74,7 @@ else  $response['status']='failed';
 
 $id=$object->get('id');
 $response['id']=$id;
+$response['verify']=$prop['sign'];
 
 $json=json_encode($response);
 print $json;

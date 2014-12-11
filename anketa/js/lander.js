@@ -31,10 +31,16 @@ function askApi(){
             break;
         case 'fio_mother': docState.data.mother_fullname=val;
             break;
-        case 'surname': docState.data.secondname=val;
+        case 'mother_phone': docState.data.mother_phone=val;
+            break;
+        case 'fio_father': docState.data.father_fullname=val;
+            break;
+        case 'father_phone': docState.data.father_phone=val;
+            break;
+        case 'vk_id': docState.data.vkcomID=val;
             break;
         default:
-            console.log('?');
+            docState.data.interests.id=val;
     }
     docState.save();
 }
