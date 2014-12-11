@@ -35,7 +35,9 @@ docState.load = function(){
 
 docState.reset = function(){
     localStorage.removeItem('docStateData');
-    delete docState.data;
+    docState={data:{interests:{}},changes:false,debug:true};
+    $('input').val('');
+    $("select option").prop("selected", false);
     if(this.debug) console.log('Reset done');
 };
 

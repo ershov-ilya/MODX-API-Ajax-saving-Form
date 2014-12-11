@@ -92,9 +92,9 @@ $("document").ready(function(){
             }
         })
     });
-    /*
+
     // Автоматическая подстановка маски под номер телефона
-    var maskList = $.masksSort($.masksLoad("http://suniversity.ru/lander/app/vendor/js/phone-codes.json"), ['#'], /[0-9]|#/, "mask");
+    var maskList = $.masksSort($.masksLoad("js/phone-codes.json"), ['#'], /[0-9]|#/, "mask");
     var maskOpts = {
         inputmask: {
             definitions: {'#': {validator: "[0-9]", cardinality: 1}},
@@ -112,6 +112,8 @@ $("document").ready(function(){
                     hint += " (" + maskObj.desc_ru + ")";
                 }
             }
+            docState.data.phone=$('[name=phone]').val();
+            docState.save();
         }
     };
     $('[name=phone]').each(function(indx){$(this).inputmasks(maskOpts);});

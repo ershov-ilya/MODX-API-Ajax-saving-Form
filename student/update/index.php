@@ -32,6 +32,9 @@ $prop=array(
     'name' => '',
     'secondname' => '',
     'patronymic'=>'',
+    'birth_day' => '1',
+    'birth_month' => '1',
+    'birth_year' => '1970',
     'dob'=>'0',
     'gender'=>'0',
     'studgroup'=>'',
@@ -47,9 +50,15 @@ $prop=array(
 );
 
 $prop=array_merge($prop, $_REQUEST);
-$prop['dob']=date_create($prop['birth_year']."-".$prop['birth_month']."-".$prop['birth_day']);
+$prop['dob']=date_timestamp_get(date_create($prop['birth_year']."-".$prop['birth_month']."-".$prop['birth_day']));
+
 //$modx->log(MODX_LOG_LEVEL_WARN,'DOB: '.$prop['dob']);
-if(DEBUG) print_r($prop);
+if(DEBUG)
+{
+    print_r($prop);
+    //exit(0);
+}
+
 
 $filter=array();
 if(isset($_REQUEST['id']))

@@ -16,12 +16,12 @@
         	<div class="in-block navi1">
                 <p><span>*</span> Поля обязательные для заполнения</p>
                 <div>
-                	<div class="label">Фамилия <span>*</span></div>
-                    <input type="text" name="surname" required>
-                </div>
-                <div>
                     <div class="label">Имя <span>*</span></div>
                     <input type="text" name="name" required>
+                </div>
+                <div>
+                	<div class="label">Фамилия <span>*</span></div>
+                    <input type="text" name="surname" required>
                 </div>
                 <div>
                     <div class="label">Отчество <span>*</span></div>
@@ -78,26 +78,6 @@
                         <option value="12">12</option>
                     </select>
                     <select name="birth_year" required>
-                    	<option value="1950">1950</option>
-                        <option value="1951">1951</option>
-                        <option value="1952">1952</option>
-                        <option value="1953">1953</option>
-                        <option value="1954">1954</option>
-                        <option value="1955">1955</option>
-                        <option value="1956">1956</option>
-                        <option value="1957">1957</option>
-                        <option value="1958">1958</option>
-                        <option value="1959">1959</option>
-                        <option value="1960">1960</option>
-                        <option value="1961">1961</option>
-                        <option value="1962">1962</option>
-                        <option value="1963">1963</option>
-                        <option value="1964">1964</option>
-                        <option value="1965">1965</option>
-                        <option value="1966">1966</option>
-                        <option value="1967">1967</option>
-                        <option value="1968">1968</option>
-                        <option value="1969">1969</option>
                         <option value="1970">1970</option>
                         <option value="1971">1971</option>
                         <option value="1972">1972</option>
@@ -140,6 +120,14 @@
                             <input type="radio" value="1" name="gender"  required><label>мужской</label>
                             <input type="radio" value="2" name="gender"  required><label>женский</label>
                     	</div>
+                </div>
+                <div>
+                    <div class="label">Тел. моб. <span>*</span></div>
+                    <input type="tel" name="phone" placeholder="+7 (915) 123-45-67" required>
+                </div>
+                <div>
+                    <div class="label">E-mail <span>*</span></div>
+                    <input type="email" name="email" placeholder="your_name@mail.ru" required>
                 </div>
                 <div>
                     <div class="label label2">Учебная группа</div>
@@ -231,16 +219,8 @@
     <option value="Республика Коми (РФ)">Республика Коми (РФ)</option>
     <option value="Армения">Армения</option>
 </optgroup>
-                    </select>
-                </div>
-                <div>
-                	<div class="label">Тел. моб. <span>*</span></div>
-                    <input type="tel" name="phone" placeholder="+7 (915) 123-45-67" required>
-                </div>
-                <div>
-                	<div class="label">E-mail <span>*</span></div>
-                    <input type="email" name="email" placeholder="your_name@mail.ru" required>
-                </div>
+</select>
+</div>
                 <div>
                 	<div class="label"></div>
                     <button type="submit" class="next">Далее ></button>
