@@ -22,6 +22,7 @@ docState.save = function(){
         this.flagReset=false;
         return false;
     }
+    if(this.flagLock) return false;
     // Скрипт маски номера телефона вызывает событие change на поле с номером телефона
     if(docState.data.phone=="") delete docState.data.phone;
     if($.isEmptyObject(docState.data)) return false;
@@ -35,12 +36,21 @@ docState.save = function(){
 };
 
 docState.load = function(){
+    this.flagLock=true;
     var json=localStorage['docStateData'];
     var obj=JSON.parse(localStorage['docStateData']);
     this.data = obj;
     if(this.debug) console.log('Load done');
     if(this.debug) console.log(this.data);
     // TODO: Заполнение всех полей
+    var dat=this.data;
+    delete dat.interests;
+    for(key in dat){
+        //console.log(key+'>>'+dat[key]);
+        formControl.set(synonym.revert[key], dat[key]);
+    }
+
+    this.flagLock=false;
 };
 
 docState.reset = function(){
@@ -102,9 +112,9 @@ apicontrol.update=function(data){
 };
 
 apicontrol.checkChanges=function(){
-    console.log('tick');
+    if(docState.debug) console.log('tick');
     if(docState.changes){
-        console.log('changes found');
+        if(docState.debug) console.log('changes found');
         var result=0;
         // Отправка данных в API
         if(docState.data.id===undefined || docState.data.verify===undefined)

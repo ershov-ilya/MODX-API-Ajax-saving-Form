@@ -1,8 +1,8 @@
 /* «Landerr» version 3.0.0 от 20.11.2014 */
-function askApi(){
-    console.log('askApi start:');
-    var tag = $(this).get(0).tagName;
+function fieldChange(){
     var name = $(this).attr("name");
+    var tag = $(this).get(0).tagName;
+    var type = $(this).attr('type');
     var val;
     if(tag=='select') {
         val=$(this).find('option:selected').text();
@@ -10,55 +10,26 @@ function askApi(){
     else{
         val = $(this).val();
     }
-    console.log('changed '+ tag+' field: '+name+' value:'+val);
+    console.log('changed '+ tag+' '+type+' field: '+name+' value:'+val);
 
-    switch(name)
-    {
-        case 'surname': docState.data.secondname=val;
-            break;
-        case 'name': docState.data.name=val;
-            break;
-        case 'patronymic': docState.data.patronymic=val;
-            break;
-        case 'birth_day': docState.data.birth_day=val;
-            break;
-        case 'birth_month': docState.data.birth_month=val;
-            break;
-        case 'birth_year': docState.data.birth_year=val;
-            break;
-        case 'gender': docState.data.gender=val;
-            break;
-        case 'learning_team': docState.data.studgroup=val;
-            break;
-        case 'branch': docState.data.affiliate=val;
-            break;
-        case 'phone': docState.data.phone=val;
-            break;
-        case 'email': docState.data.email=val;
-            break;
-        case 'fio_mother': docState.data.mother_fullname=val;
-            break;
-        case 'mother_phone': docState.data.mother_phone=val;
-            break;
-        case 'fio_father': docState.data.father_fullname=val;
-            break;
-        case 'father_phone': docState.data.father_phone=val;
-            break;
-        case 'vk_id': docState.data.vkcomID=val;
-            break;
-        default:
-            var arr=[];
-            $('[type=checkbox]:checked').each(function(){
-                arr.push($(this).val());
-            });
-            if(docState.data.interests===undefined) docState.data.interests=[];
-            docState.data.interests=arr;
+    if(type=='checkbox'){
+        var arr=[];
+        $('[type=checkbox]:checked').each(function(){
+            arr.push($(this).val());
+        });
+        if(docState.data.interests===undefined) docState.data.interests=[];
+        docState.data.interests=arr;
+    }else{
+        var sname = synonym.map[name];
+        docState.data[sname]=val;
     }
+
     docState.save();
 }
 $("document").ready(function(){
+    synonym.refresh();
     docState.check();
-    $("form input, form select").on('change', askApi);
+    $("form input, form select").on('change', fieldChange);
     setTimeout(apicontrol.start,2000);
 
     // Получение и вывод системной информации
