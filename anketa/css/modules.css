@@ -141,7 +141,7 @@ input[type="checkbox"][disabled=""] + label {
 a.section3{
 	margin:20px 0 0 300px !important;
 }
-.next {
+.next,.prev {
         -moz-box-shadow:inset 0px 1px 0px 0px #ffe0b5;
         -webkit-box-shadow:inset 0px 1px 0px 0px #ffe0b5;
         box-shadow:inset 0px 1px 0px 0px #ffe0b5;
@@ -167,7 +167,7 @@ a.section3{
         text-decoration:none !important;
         
 }
-.next:hover {
+.next:hover,.prev:hover {
         background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ff7402), color-stop(1, #fe951d));
         background:-moz-linear-gradient(top, #ff7402 5%, #fe951d 100%);
         background:-webkit-linear-gradient(top, #ff7402 5%, #fe951d 100%);

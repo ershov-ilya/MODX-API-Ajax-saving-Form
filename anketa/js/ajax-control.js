@@ -1,7 +1,7 @@
 /**
  * Created by IErshov on 11.12.2014.
  */
-var docState={data:{interests:{}},changes:false,debug:true};
+var docState={data:{interests:[]},changes:false,debug:true};
 var apicontrol={};
 
 docState.check = function(){
@@ -35,7 +35,7 @@ docState.load = function(){
 
 docState.reset = function(){
     localStorage.removeItem('docStateData');
-    docState={data:{interests:{}},changes:false,debug:true};
+    docState={data:{interests:[]},changes:false,debug:true};
     $('input').val('');
     $("select option").prop("selected", false);
     if(this.debug) console.log('Reset done');

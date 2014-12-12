@@ -1,17 +1,17 @@
 /* «Landerr» version 3.0.0 от 20.11.2014 */
 function askApi(){
-    var name = $(this).get(0).tagName;
-    var id = $(this).attr("name");
+    var tag = $(this).get(0).tagName;
+    var name = $(this).attr("name");
     var val;
-    if(name=='select') {
+    if(tag=='select') {
         val=$(this).find('option:selected').text();
     }
     else{
         val = $(this).val();
     }
-    console.log('changed '+ name+' field: '+id+' value:'+val);
+    console.log('changed '+ tag+' field: '+name+' value:'+val);
 
-    switch(id)
+    switch(name)
     {
         case 'surname': docState.data.secondname=val;
             break;
@@ -46,7 +46,11 @@ function askApi(){
         case 'vk_id': docState.data.vkcomID=val;
             break;
         default:
-            docState.data.interests.id=val;
+            var arr=[];
+            $('[type=checkbox]:checked').each(function(){
+                arr.push($(this).val());
+            });
+            docState.data.interests=arr;
     }
     docState.save();
 }

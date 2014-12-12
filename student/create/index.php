@@ -71,7 +71,7 @@ $object->set('mother_phone', $prop['mother_phone']);
 $object->set('father_fullname', $prop['father_fullname']);
 $object->set('father_phone', $prop['father_phone']);
 $object->set('vkcomID', $prop['vkcomID']);
-$object->set('interests', $prop['interests']);
+$object->set('interests', serialize($prop['interests']));
 if($object->save()) $response['status']='OK';
 else  $response['status']='failed';
 

@@ -17,19 +17,19 @@
                 <p><span>*</span> Поля обязательные для заполнения</p>
                 <div>
                     <div class="label">Имя <span>*</span></div>
-                    <input type="text" name="name" required>
+                    <input type="text" name="name" id="name" required>
                 </div>
                 <div>
                 	<div class="label">Фамилия <span>*</span></div>
-                    <input type="text" name="surname" required>
+                    <input type="text" name="surname" id="secondname" required>
                 </div>
                 <div>
                     <div class="label">Отчество <span>*</span></div>
-                    <input type="text" name="patronymic" required>
+                    <input type="text" name="patronymic" id="patronymic" required>
                 </div>
                 <div>
                     <div class="label label2">Дата рождения <span>*</span></div>
-                    <select name="birth_day" required>
+                    <select name="birth_day" id="birth_day" required>
                     	<option value="01">01</option>
                         <option value="02">02</option>
                         <option value="03">03</option>
@@ -63,7 +63,7 @@
                         <option value="30">30</option>
                         <option value="31">31</option>
                     </select>
-                    <select name="birth_month" required>
+                    <select name="birth_month" id="birth_month" required>
                     	<option value="01">01</option>
                         <option value="02">02</option>
                         <option value="03">03</option>
@@ -77,7 +77,7 @@
                         <option value="11">11</option>
                         <option value="12">12</option>
                     </select>
-                    <select name="birth_year" required>
+                    <select name="birth_year" id="birth_year" required>
                         <option value="1970">1970</option>
                         <option value="1971">1971</option>
                         <option value="1972">1972</option>
@@ -117,8 +117,8 @@
                 <div>
                     <div class="label">Пол</div>
                     	<div>
-                            <input type="radio" value="1" name="gender"  required><label>мужской</label>
-                            <input type="radio" value="2" name="gender"  required><label>женский</label>
+                            <input type="radio" value="1" name="gender" id="male" required><label for="male">мужской</label>
+                            <input type="radio" value="2" name="gender" id="female" required><label for="female">женский</label>
                     	</div>
                 </div>
                 <div>
