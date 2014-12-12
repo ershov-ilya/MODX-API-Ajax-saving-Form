@@ -44,6 +44,7 @@ docState.load = function(){
     if(this.debug) console.log(this.data);
     // TODO: Заполнение всех полей
     var dat=this.data;
+    formControl.check(this.data.interests);
     delete dat.interests;
     for(key in dat){
         //console.log(key+'>>'+dat[key]);
