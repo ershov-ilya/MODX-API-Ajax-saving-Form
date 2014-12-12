@@ -1,5 +1,6 @@
 /* «Landerr» version 3.0.0 от 20.11.2014 */
 function askApi(){
+    console.log('askApi start:');
     var tag = $(this).get(0).tagName;
     var name = $(this).attr("name");
     var val;
@@ -50,15 +51,15 @@ function askApi(){
             $('[type=checkbox]:checked').each(function(){
                 arr.push($(this).val());
             });
+            if(docState.data.interests===undefined) docState.data.interests=[];
             docState.data.interests=arr;
     }
     docState.save();
 }
-
 $("document").ready(function(){
     docState.check();
-    apicontrol.start();
     $("form input, form select").on('change', askApi);
+    setTimeout(apicontrol.start,2000);
 
     // Получение и вывод системной информации
     $("form").on("submit", function(){

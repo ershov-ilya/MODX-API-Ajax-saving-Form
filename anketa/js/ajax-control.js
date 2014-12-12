@@ -1,7 +1,7 @@
 /**
  * Created by IErshov on 11.12.2014.
  */
-var docState={data:{interests:[]},changes:false,debug:true};
+var docState={data:{},changes:false,debug:true,flagReset:false};
 var apicontrol={};
 
 docState.check = function(){
@@ -16,12 +16,22 @@ docState.check = function(){
 };
 
 docState.save = function(){
+    if(this.debug) console.log('docState.save start');
+    if(this.flagReset===true)
+    {
+        this.flagReset=false;
+        return false;
+    }
+    // Скрипт маски номера телефона вызывает событие change на поле с номером телефона
+    if(docState.data.phone=="") delete docState.data.phone;
+    if($.isEmptyObject(docState.data)) return false;
+
     if(this.debug) console.log(this.data);
     var str=JSON.stringify(this.data);
     if(this.debug) console.log(str);
     localStorage['docStateData']=str;
-    if(this.debug) console.log('Save done');
     this.changes=true;
+    if(this.debug) console.log('docState.save done');
 };
 
 docState.load = function(){
@@ -34,10 +44,16 @@ docState.load = function(){
 };
 
 docState.reset = function(){
+    if(this.debug) console.log('Reset:');
+    this.flagReset=true;
+    console.log(this);
     localStorage.removeItem('docStateData');
-    docState={data:{interests:[]},changes:false,debug:true};
     $('input').val('');
     $("select option").prop("selected", false);
+    $('input[type="checkbox"]').prop("checked", false);
+    docState.changes=false;
+    delete docState.data;
+    docState.data={};
     if(this.debug) console.log('Reset done');
 };
 
@@ -86,6 +102,7 @@ apicontrol.update=function(data){
 };
 
 apicontrol.checkChanges=function(){
+    console.log('tick');
     if(docState.changes){
         console.log('changes found');
         var result=0;
@@ -103,8 +120,8 @@ apicontrol.checkChanges=function(){
 };
 
 apicontrol.start=function(){
-    setInterval(this.checkChanges, 500);
-    console.log('checkchanges start');
+    console.log('apicontrol check changes start...');
+    setInterval(apicontrol.checkChanges, 500);
     /**/
 };
 
