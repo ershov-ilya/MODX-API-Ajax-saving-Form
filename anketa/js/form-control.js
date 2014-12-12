@@ -2,19 +2,20 @@
  * Created by IErshov on 12.12.2014.
  */
 formControl={};
-formControl.set=function(name, value) {
+formControl.set=function(name, value, checkboxOnly) {
     //var scenarios = ['input-text', 'input-radio', 'select', 'input-checkbox'];
     var scenario = '';
     var found = false;
 
-    var ptr = $('#' + name + '');
-    if (ptr && ptr.size()) found = true;
-
-    if (!found) {
-        ptr = $('[name=' + name + ']');
+    if(!checkboxOnly) {
+        var ptr = $('#' + name + '');
         if (ptr && ptr.size()) found = true;
-    }
 
+        if (!found) {
+            ptr = $('[name=' + name + ']');
+            if (ptr && ptr.size()) found = true;
+        }
+    }
     if (!found) {
         ptr = $('input[type="checkbox"][value="'+name+'"]');
         console.log(ptr);
@@ -23,6 +24,8 @@ formControl.set=function(name, value) {
             scenario='input-checkbox';
         }
     }
+
+    if(scenario!='input-checkbox' && checkboxOnly) return false;
 
     if(found){
         if(!scenario) {
@@ -63,7 +66,7 @@ formControl.set=function(name, value) {
             case 'select':
                 ptr.find("option").prop("selected", false);
                 ptr.find('[value="'+value+'"]').prop("selected", true);
-                console.log('select');
+                //console.log('select');
                 return true;
                 break;
             case 'input-checkbox':
@@ -72,8 +75,16 @@ formControl.set=function(name, value) {
                 return true;
                 break;
             default:
-                console.log('Bad scenario: '+scenario);
+                console.log('Scenario not found: '+scenario);
         }
     }
     return false;
+};
+
+formControl.check=function(arr){
+    $('input[type="checkbox"]').prop("checked", false);
+    for(key in arr){
+        //console.log(arr[key]);
+        this.set(arr[key],1,true);
+    }
 };
