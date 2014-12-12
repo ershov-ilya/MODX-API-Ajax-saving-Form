@@ -2,8 +2,8 @@
  * Created by IErshov on 12.12.2014.
  */
 formControl={};
-formControl.setValue=function(name, value) {
-    var scenarios = ['input-text', 'input-radio', 'select', 'input-checkbox'];
+formControl.set=function(name, value) {
+    //var scenarios = ['input-text', 'input-radio', 'select', 'input-checkbox'];
     var scenario = '';
     var found = false;
 
@@ -15,25 +15,36 @@ formControl.setValue=function(name, value) {
         if (ptr && ptr.size()) found = true;
     }
 
-    if(found){
-        var select=/select/i;
-        var input=/input/i;
-        var radio=/radio/i;
-        var checkbox=/checkbox/i;
-        var text=/text/i;
+    if (!found) {
+        ptr = $('input[type="checkbox"][value="'+name+'"]');
+        console.log(ptr);
+        if (ptr && ptr.size()){
+            found = true;
+            scenario='input-checkbox';
+        }
+    }
 
-        var tag = $(ptr).get(0).tagName;
-        var type = $(ptr).attr('type');
-        if(select.test(tag)){
-            scenario='select';
-        }else if(input.test(tag)){
-            scenario='input';
-            if(radio.test(type)){
-                scenario='input-radio';
-            }else if(checkbox.test(type)) {
-                scenario='input-checkbox';
-            }else if(type===undefined || text.test(type)){
-                scenario='input-text';
+    if(found){
+        if(!scenario) {
+            var select = /select/i;
+            var input = /input/i;
+            var radio = /radio/i;
+            var checkbox = /checkbox/i;
+            var text = /text/i;
+
+            var tag = $(ptr).get(0).tagName;
+            var type = $(ptr).attr('type');
+            if (select.test(tag)) {
+                scenario = 'select';
+            } else if (input.test(tag)) {
+                scenario = 'input';
+                if (radio.test(type)) {
+                    scenario = 'input-radio';
+                } else if (checkbox.test(type)) {
+                    scenario = 'input-checkbox';
+                } else if (type === undefined || text.test(type)) {
+                    scenario = 'input-text';
+                }
             }
         }
 
@@ -56,7 +67,8 @@ formControl.setValue=function(name, value) {
                 return true;
                 break;
             case 'input-checkbox':
-                console.log('input-checkbox');
+                if(value && value!='0') ptr.prop("checked", true);
+                else ptr.prop("checked", false);
                 return true;
                 break;
             default:
