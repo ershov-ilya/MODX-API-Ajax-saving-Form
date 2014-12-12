@@ -27,10 +27,11 @@ require('../../../../index.php');
 /** @var modX $modx */
 /** @var modObject $obj */
 //print $modx->parseChunk('hello_world', array());
-
+$time=time();
 $prop=array(
     'sign' => hash('sha256', rand()),
-    'updated'=>time(),
+    'created'=>$time,
+    'updated'=>$time,
     'name' => '',
     'secondname' => '',
     'patronymic'=>'',
@@ -56,6 +57,7 @@ if(DEBUG) print_r($prop);
 
 $object = $modx->newObject('StudentProfile');
 $object->set('sign', $prop['sign']);
+$object->set('created', $prop['updated']);
 $object->set('updated', $prop['updated']);
 $object->set('name', $prop['name']);
 $object->set('secondname', $prop['secondname']);

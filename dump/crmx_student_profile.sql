@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Дек 11 2014 г., 13:17
+-- Время создания: Дек 12 2014 г., 13:37
 -- Версия сервера: 5.5.9
 -- Версия PHP: 5.3.28
 
@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `crmx_student_profile` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `modxuserid` int(10) unsigned DEFAULT NULL,
   `sign` char(64) NOT NULL DEFAULT '' COMMENT 'Проверочный хэш',
+  `created` int(10) unsigned NOT NULL DEFAULT '0',
   `updated` int(10) unsigned NOT NULL DEFAULT '0',
   `name` varchar(100) NOT NULL DEFAULT '' COMMENT 'Имя',
   `secondname` varchar(100) NOT NULL DEFAULT '' COMMENT 'Фамилия',
