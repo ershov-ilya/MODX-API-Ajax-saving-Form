@@ -88,3 +88,29 @@ formControl.check=function(arr){
         this.set(arr[key],1,true);
     }
 };
+
+
+formControl.listen = function(){
+    // hide all dependences
+    $('[data-depends]').each(function(){
+        var selector=$(this).data('depends');
+        $(selector).hide();
+    });
+
+    $('select').on('change',function(){
+        var dependences=$(this).find('[data-depends]');
+        var size = dependences.size();
+        //console.log(size);
+
+        if(size) {
+            dependences.each(function () {
+                var selector = $(this).data('depends');
+                var action = $(this).is(':selected');
+                console.log('selector: '+selector);
+                console.log('action: '+action);
+                if(!action) {$(selector).fadeOut(300);}
+                if(action) {$(selector).fadeIn(300);}
+            });
+        }
+    });
+};
