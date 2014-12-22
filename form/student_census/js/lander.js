@@ -1,32 +1,4 @@
 /* «Landerr» version 3.0.0 от 20.11.2014 */
-function fieldChange(){
-    var name = $(this).attr("name");
-    var tag = $(this).get(0).tagName;
-    var type = $(this).attr('type');
-    var val;
-    if(tag=='select') {
-        val=$(this).find('option:selected').text();
-    }
-    else{
-        val = $(this).val();
-    }
-    console.log('changed '+ tag+' '+type+' field: '+name+' value:'+val);
-
-    if(type=='checkbox'){
-        var arr=[];
-        $('[type=checkbox]:checked').each(function(){
-            arr.push($(this).val());
-        });
-        if(docState.data.interests===undefined) docState.data.interests=[];
-        docState.data.interests=arr;
-    }else{
-        var sname = synonym.map[name];
-        docState.data[sname]=val;
-        if(docState.debug) console.log('Saving sname: '+sname+' val:'+val);
-    }
-
-    docState.save();
-}
 $("document").ready(function(){
     formControl.listen();
     if($('body').hasClass('autocomplete')) {
@@ -110,8 +82,14 @@ $("document").ready(function(){
                     hint += " (" + maskObj.desc_ru + ")";
                 }
             }
-            docState.data.phone=$('[name=phone]').val();
-            docState.save();
+
+            /*docState.data.phone=$('[name=phone]').val();
+            docState.save();*/
+            fieldChange(this);
+            /*
+            console.log('phone field ');
+            console.log($(this));
+            */
         }
     };
     $('input[type="tel"]').each(function(indx){$(this).inputmasks(maskOpts);});

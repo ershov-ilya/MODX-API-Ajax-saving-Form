@@ -107,7 +107,7 @@ formControl.listen = function(){
                 var selected = $(this).is(':selected');
                 console.log('selector: '+selector);
                 console.log('action: '+selected);
-                if(!selected) {$(selector).find('option').prop('selected',false); $(selector).fadeOut(300);}
+                if(!selected) {$(selector).find('option').prop('selected',false);$(selector).trigger('change'); $(selector).fadeOut(300);}
                 if(selected) {$(selector).fadeIn(300);}
             });
         }

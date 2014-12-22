@@ -42,7 +42,8 @@ docState.load = function(){
     this.data = obj;
     if(this.debug) console.log('Load done');
     if(this.debug) console.log(this.data);
-    // TODO: Заполнение всех полей
+
+    // Заполнение всех полей
     var dat=this.data;
     formControl.check(this.data.interests);
     delete dat.interests;
@@ -68,6 +69,50 @@ docState.reset = function(){
     if(this.debug) console.log('Reset done');
 };
 
+
+/* Custom field change listener
+ --------------------------------------*/
+function fieldChange(ptr){
+    if(ptr===undefined) ptr=this;
+    var id = $(ptr).attr("id");
+    var name = $(ptr).attr("name");
+    var tag = $(ptr).get(0).tagName;
+    var type = $(ptr).attr('type');
+    var val, length;
+
+    if(tag=='select') {
+        val=$(ptr).find('option:selected').text();
+    }
+    else{
+        val = $(ptr).val();
+        length=val.length;
+    }
+    console.log('changed '+ tag+' '+type+' field: '+name+' value:'+val);
+
+    if(type=='tel') {
+        console.log('tel: name='+name+' val='+val+' length='+length);
+        if(length<9) return true;
+    }
+
+    if(type=='checkbox'){
+        var arr=[];
+        $('[type=checkbox]:checked').each(function(){
+            arr.push($(this).val());
+        });
+        if(docState.data.interests===undefined) docState.data.interests=[];
+        docState.data.interests=arr;
+    }else{
+        var sname = synonym.map[name];
+        docState.data[sname]=val;
+        if(docState.debug) console.log('Saving sname: '+sname+' val:'+val);
+    }
+
+    docState.save();
+}
+
+
+/* api control
+--------------------------------------*/
 apicontrol.create=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/census/create/";
     var success = function (response){
