@@ -10,6 +10,10 @@ header('Content-Type: text/plain; charset=utf-8');
 error_reporting(E_ERROR | E_WARNING);
 ini_set("display_errors", 1);
 
+define('MODX_API_MODE', true);
+require('../../index.php');
+
+
 $rand=rand();
 echo $rand."\n";
 echo hash('sha256', $rand);
@@ -41,3 +45,6 @@ print_r($prop);
 $dob=date_create($prop['birth_year']."-".$prop['birth_month']."-".$prop['birth_day']);
 
 echo date_format($dob,"d.m.Y");
+
+$object = $modx->newObject('StudentCensus');
+//print_r($object);

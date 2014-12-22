@@ -22,12 +22,14 @@ function fieldChange(){
     }else{
         var sname = synonym.map[name];
         docState.data[sname]=val;
+        if(docState.debug) console.log('Saving sname: '+sname+' val:'+val);
     }
 
     docState.save();
 }
 $("document").ready(function(){
-    if($('body').hasClass('jquery-ui')) {
+    formControl.listen();
+    if($('body').hasClass('autocomplete')) {
         $("#autocomplete-group").autocomplete({
             source: groups_source,
             minLength: 2,
@@ -78,7 +80,7 @@ $("document").ready(function(){
                 $(form).ajaxSubmit({
                     target: $(form),
                     success: function() {
-                        Hash.add("app", "ok");
+                        if(Hash) Hash.add("app", "ok");
                     }
                 });
                 // Блокирование полей и кнопки
@@ -112,7 +114,7 @@ $("document").ready(function(){
             docState.save();
         }
     };
-    $('[name=phone]').each(function(indx){$(this).inputmasks(maskOpts);});
+    $('input[type="tel"]').each(function(indx){$(this).inputmasks(maskOpts);});
     /**/
 
     // Перевод валидации на русский язык
