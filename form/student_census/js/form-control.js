@@ -18,7 +18,6 @@ formControl.set=function(name, value, checkboxOnly) {
     }
     if (!found) {
         ptr = $('input[type="checkbox"][value="'+name+'"]');
-        console.log(ptr);
         if (ptr && ptr.size()){
             found = true;
             scenario='input-checkbox';

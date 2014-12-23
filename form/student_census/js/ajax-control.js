@@ -69,16 +69,20 @@ docState.reset = function(){
     if(this.debug) console.log('Reset done');
 };
 
+var testobj;
 
 /* Custom field change listener
  --------------------------------------*/
 function fieldChange(ptr){
-    if(ptr===undefined) ptr=this;
+    if(docState.debug) console.log('function fieldChange start');
+    if(ptr===undefined || ptr.type=='change') ptr=this;
+
     var id = $(ptr).attr("id");
+    var type = $(ptr).attr('type');
     var name = $(ptr).attr("name");
     var tag = $(ptr).get(0).tagName;
-    var type = $(ptr).attr('type');
     var val, length;
+
 
     if(tag=='select') {
         val=$(ptr).find('option:selected').text();
@@ -87,7 +91,6 @@ function fieldChange(ptr){
         val = $(ptr).val();
         length=val.length;
     }
-    console.log('changed '+ tag+' '+type+' field: '+name+' value:'+val);
 
     if(type=='tel') {
         console.log('tel: name='+name+' val='+val+' length='+length);
@@ -95,6 +98,7 @@ function fieldChange(ptr){
     }
 
     if(type=='checkbox'){
+        console.log('checkbox change event');
         var arr=[];
         $('[type=checkbox]:checked').each(function(){
             arr.push($(this).val());

@@ -81,9 +81,10 @@ select[name="birth_year"]{
 	clear:left;
 }
 .in-block .check .column{
-	height:260px;
-	margin:0 25px 0 0;
+	/*height:260px;*/
+	margin:0 25px 20px 0;
 	padding:0;
+	width:275px;
 }
 .in-block .check .column h1{
 	color:#0097EB;
@@ -97,7 +98,7 @@ input[type="checkbox"] {
 /*label.checkbox{	height:38px;}*/
 input[type="checkbox"] + label {
     background: url(../img/checkbox_sprite.jpg) 0 0 no-repeat;
-	padding:1px 0 1px 30px;
+	padding:1px 0 2px 30px;
 	clear:right;
 	float:none;
 }
