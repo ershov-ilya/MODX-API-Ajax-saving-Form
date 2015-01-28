@@ -80,10 +80,10 @@ class Method {
 
     function filtrate($arr, $filter=NULL){
         if($filter==NULL) $filter=Method::$filter;
-        if(DEBUG) {
-            if (is_array($filter)) print "Filter type Array\n";
-            if (is_string($filter)) print "Filter type String\n";
-        }
+//        if(DEBUG) {
+//            if (is_array($filter)) print "Filter type Array\n";
+//            if (is_string($filter)) print "Filter type String\n";
+//        }
         if (is_string($filter)){
             $filter=explode(',',$filter);
         }

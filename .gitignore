@@ -1,3 +1,4 @@
 .idea/
 .git/
 cgi-bin/
+pdo.config.php
