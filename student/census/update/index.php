@@ -32,32 +32,9 @@ $time=time()+$hours3;
 
 $prop=array(
     'updated'=>$time,
-    'name' => '',
-    'secondname' => '',
-    'patronymic'=>'',
     'birth_day' => '1',
     'birth_month' => '1',
-    'birth_year' => '1970',
-    'dob'=>'0',
-    'gender'=>'0',
-    'studgroup'=>'',
-    'affiliate'=>'',
-    'phone'=>'',
-    'email'=>'',
-    'contact1_name'=>'',
-    'contact1_phone'=>'',
-    'contact2_name'=>'',
-    'contact2_phone'=>'',
-    'contact3_name'=>'',
-    'contact3_phone'=>'',
-    'vk_id'=>'',
-    'interests'=>'',
-    'prof_experience'=>'',
-    'prof_plan'=>'',
-    'prof_orientation'=>'',
-    'prof_status'=>'',
-    'prof_income'=>'',
-    'referer'=>''
+    'birth_year' => '1970'
 );
 
 $prop=array_merge($prop, $_REQUEST);
@@ -112,29 +89,30 @@ if($response['status']=='OK') {
 
 if($response['status']!='failed') {
     $object->set('updated', $prop['updated']);
-    $object->set('name', $prop['name']);
-    $object->set('secondname', $prop['secondname']);
-    $object->set('patronymic', $prop['patronymic']);
-    $object->set('dob', $prop['dob']);
-    $object->set('gender', $prop['gender']);
-    $object->set('studgroup', $prop['studgroup']);
-    $object->set('affiliate', $prop['affiliate']);
-    $object->set('phone', $prop['phone']);
-    $object->set('email', $prop['email']);
-    $object->set('contact1_name', $prop['contact1_name']);
-    $object->set('contact1_phone', $prop['contact1_phone']);
-    $object->set('contact2_name', $prop['contact2_name']);
-    $object->set('contact2_phone', $prop['contact2_phone']);
-    $object->set('contact3_name', $prop['contact3_name']);
-    $object->set('contact3_phone', $prop['contact3_phone']);
-    $object->set('vk_id', $prop['vk_id']);
-    $object->set('interests', serialize($prop['interests']));
-    $object->set('prof_experience', $prop['prof_experience']);
-    $object->set('prof_plan', $prop['prof_plan']);
-    $object->set('prof_orientation', $prop['prof_orientation']);
-    $object->set('prof_status', $prop['prof_status']);
-    $object->set('prof_income', $prop['prof_income']);
-    $object->set('referer', $prop['referer']);
+    if(isset($prop['name']))            $object->set('name', $prop['name']);
+    if(isset($prop['secondname']))      $object->set('secondname', $prop['secondname']);
+    if(isset($prop['patronymic']))      $object->set('patronymic', $prop['patronymic']);
+    if(isset($prop['dob']))             $object->set('dob', $prop['dob']);
+    if(isset($prop['gender']))          $object->set('gender', $prop['gender']);
+    if(isset($prop['studgroup']))       $object->set('studgroup', $prop['studgroup']);
+    if(isset($prop['affiliate']))       $object->set('affiliate', $prop['affiliate']);
+    if(isset($prop['phone']))           $object->set('phone', $prop['phone']);
+    if(isset($prop['email']))           $object->set('email', $prop['email']);
+    if(isset($prop['contact1_name']))   $object->set('contact1_name', $prop['contact1_name']);
+    if(isset($prop['contact1_phone']))  $object->set('contact1_phone', $prop['contact1_phone']);
+    if(isset($prop['contact2_name']))   $object->set('contact2_name', $prop['contact2_name']);
+    if(isset($prop['contact2_phone']))  $object->set('contact2_phone', $prop['contact2_phone']);
+    if(isset($prop['contact3_name']))   $object->set('contact3_name', $prop['contact3_name']);
+    if(isset($prop['contact3_phone']))  $object->set('contact3_phone', $prop['contact3_phone']);
+    if(isset($prop['vk_id']))           $object->set('vk_id', $prop['vk_id']);
+    if(isset($prop['interests']))       $object->set('interests', serialize($prop['interests']));
+    if(isset($prop['prof_experience'])) $object->set('prof_experience', $prop['prof_experience']);
+    if(isset($prop['prof_plan']))       $object->set('prof_plan', $prop['prof_plan']);
+    if(isset($prop['prof_orientation']))$object->set('prof_orientation', $prop['prof_orientation']);
+    if(isset($prop['prof_status']))     $object->set('prof_status', $prop['prof_status']);
+    if(isset($prop['prof_income']))     $object->set('prof_income', $prop['prof_income']);
+    if(isset($prop['referer']))         $object->set('referer', $prop['referer']);
+
     if ($object->save()) $response['status'] = 'OK';
     else  $response['status'] = 'failed';
 
