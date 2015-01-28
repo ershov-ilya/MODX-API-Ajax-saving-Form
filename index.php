@@ -48,3 +48,4 @@ echo date_format($dob,"d.m.Y");
 
 $object = $modx->newObject('StudentCensus');
 //print_r($object);
+
