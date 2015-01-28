@@ -87,7 +87,6 @@ class Method {
         if (is_string($filter)){
             $filter=explode(',',$filter);
         }
-        print_r($filter);
 
         $res=array();
         foreach($filter as $el){
