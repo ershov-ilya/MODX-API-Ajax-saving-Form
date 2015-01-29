@@ -29,6 +29,7 @@ function generateRandomString($length = 10) {
 
 // API includes
 require('../../core/config/api.config.php');
+require(API_CORE_PATH.'/config/pdo.config.php');
 require(API_CORE_PATH.'/class/method/method.class.php');
 
 
@@ -38,11 +39,43 @@ $method=new Method();
 //print_r($_SERVER);
 
 // Gen UTM
+$prefix="FST_";
+$utm=generateRandomString(6);
+$utm=$prefix.$utm;
 
-$answer= $method->scope;
-$utm=generateRandomString(12);
-$answer['utm'] = $utm;
+// Формирование ответа
+$answer=array();
+$answer['result']='Fail';
+$answer['message']='';
+$answer['data'] =  $method->scope;
 
-$json_answer=json_encode($answer);
-print $json_answer;
-exit(0);
+$i=10;
+$res=false;
+while($res==false && $i>0) {
+    try {
+        extract($dbconfig);
+        $db = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+        $stmt = $db->prepare("INSERT INTO `gnewsbs_crm`.`referal_utm` (`utm`) VALUES (:utm);");
+        $stmt->bindParam(':utm', $utm);
+        $res = $stmt->execute();
+        if(!$res) {$utm=generateRandomString(12); $utm=$prefix.$utm;}
+            $i--;
+    } catch (PDOException $e) {
+        echo 'Error : ' . $e->getMessage();
+        exit();
+    }
+}
+if($res){
+    $answer['result']='OK';
+    $answer['data']['utm'] = $utm;
+}
+else{
+    $utm='Error';
+}
+
+if(isset($_REQUEST['json'])) {
+    $json_answer = json_encode($answer);
+    print $json_answer;
+}else{
+    print $utm;
+}
