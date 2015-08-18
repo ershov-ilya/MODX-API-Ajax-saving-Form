@@ -69,7 +69,7 @@ docState.reset = function(){
 };
 
 apicontrol.create=function(data){
-    var url = "http://crm.syndev.ru/api/v1/student/create/";
+    var url = "http://crm.syndev.ru/api/v1/student/census/create/";
     var success = function (response){
         console.log(response);
         docState.data.id=response.id;
@@ -87,7 +87,7 @@ apicontrol.create=function(data){
 };
 
 apicontrol.check=function(data){
-    var url = "http://crm.syndev.ru/api/v1/student/check/";
+    var url = "http://crm.syndev.ru/api/v1/student/census/check/";
     var success = function (response){ console.log(response); apicontrol.checkResponse(response); };
 
     $.ajax({
@@ -100,7 +100,7 @@ apicontrol.check=function(data){
 };
 
 apicontrol.update=function(data){
-    var url = "http://crm.syndev.ru/api/v1/student/update/";
+    var url = "http://crm.syndev.ru/api/v1/student/census/update/";
     var success = function (response){ console.log(response);  apicontrol.checkResponse(response);};
 
     $.ajax({

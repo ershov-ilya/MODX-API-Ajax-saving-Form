@@ -25,6 +25,9 @@ else{define('DEBUG',false);}
 
 define('MODX_API_MODE', true);
 require('../../../../../index.php');
+
+if(empty($modx->user->id)) die('Доступ запрещён: Авторизуйтесь в админке');
+
 $response=array();
 
 /** @var modX $modx */
