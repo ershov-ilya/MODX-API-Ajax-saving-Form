@@ -17,12 +17,15 @@ ini_set("display_errors", 1);
 
 /* Init
 -------------------------------------------------*/
-if(isset($_GET['debug'])){define('DEBUG',true);}
-else{define('DEBUG',false);}
+if(isset($_GET['t'])){define('DEBUG',true);}
+defined('DEBUG') or define('DEBUG',false);
+
 $response=array();
 
 define('MODX_API_MODE', true);
 require('../../../../../index.php');
+
+if(DEBUG) {print 'DEBUG'.PHP_EOL; die;}
 
 /** @var modX $modx */
 /** @var modObject $obj */

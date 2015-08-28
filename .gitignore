@@ -4,3 +4,4 @@ cgi-bin/
 pdo.config.php
 .htaccess
 *.png
+*.private.config.php
