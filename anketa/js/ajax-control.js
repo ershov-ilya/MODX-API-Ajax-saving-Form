@@ -2,7 +2,11 @@
  * Created by IErshov on 11.12.2014.
  */
 var docState={data:{},changes:false,debug:true,flagReset:false};
-var apicontrol={};
+var apicontrol={
+    config:{
+        get_keys:['source','sourceId']
+    }
+};
 
 docState.check = function(){
     if(supports_html5_storage()){
@@ -117,8 +121,9 @@ function fieldChange(ptr){
 
 /* api control
 --------------------------------------*/
-apicontrol.create=function(data){
+apicontrol.createObj=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/census/create/";
+    data= $.extend({},data,apicontrol.parseGET());
     var success = function (response){
         console.log(response);
         docState.data.id=response.id;
@@ -135,6 +140,51 @@ apicontrol.create=function(data){
     });
 };
 
+apicontrol.parseGET = function(url){
+    utm_keys = apicontrol.config.get_keys;
+    if(!url || url == '') url = decodeURI(document.location.search);
+    if(url.indexOf('?') < 0) return {};
+
+    var GET = {},
+        OTHER = [],
+        params = [],
+        key = [],
+        split=[],
+        new_url;
+
+    split = url.split('?');
+    new_url=window.location.pathname;
+    url = split[1];
+
+
+    if(url.indexOf('#')!=-1){
+        url = url.substr(0,url.indexOf('#'));
+    }
+    if(url.indexOf('&') > -1){ params = url.split('&');} else {params[0] = url; }
+
+    var r,z;
+    for (r=0; r<params.length; r++){
+        for (z=0; z<utm_keys.length; z++){
+            if(params[r].indexOf(utm_keys[z]+'=') > -1){
+                if(params[r].indexOf('=') > -1) {
+                    key = params[r].split('=');
+                    GET[key[0]]=key[1];
+                }
+            }
+        }
+
+        //
+        key = params[r].split('=');
+        if(utm_keys.indexOf(key[0])==-1) {
+            OTHER.push(params[r]);
+        }
+    }
+    if(OTHER.length) new_url+='?'+OTHER.join('&');
+    if(window.location.hash) new_url+=window.location.hash;
+    return (GET);
+};
+
+
 apicontrol.check=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/census/check/";
     var success = function (response){ console.log(response); apicontrol.checkResponse(response); };
@@ -150,15 +200,17 @@ apicontrol.check=function(data){
 
 apicontrol.update=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/census/update/";
-    var success = function (response){ console.log(response);  apicontrol.checkResponse(response);};
+    var success = function (response){
+        console.log(response);
+        apicontrol.checkResponse(response);
+    };
 
     $.ajax({
         type: "POST",
         dataType: "json",
         url: url,
         data: data,
-        success: success
-    });
+    }).always(success);
 };
 
 apicontrol.checkChanges=function(){
@@ -169,7 +221,7 @@ apicontrol.checkChanges=function(){
         // Отправка данных в API
         if(docState.data.id===undefined || docState.data.verify===undefined)
         {
-            apicontrol.create(docState.data);
+            apicontrol.createObj(docState.data);
         }else{
             apicontrol.update(docState.data);
         }
@@ -194,11 +246,16 @@ function supports_html5_storage() {
 }
 
 apicontrol.checkResponse=function(response) {
-    if(response.status=='fail'){
+    if(docState.debug) {console.log('checkResponse()');}
+    if(response.status=='failed') {
         console.log('Response: "failed"');
-        if(response.message=='Wrong verify') {
+        if (response.message == 'Wrong verify') {
             console.log('Сброс формы');
             docState.reset();
+        }
+        if (response.message == 'No such object') {
+            console.log('Создаём новый объект');
+            apicontrol.createObj(docState.data);
         }
     }
 };

@@ -72,14 +72,14 @@ $prop['dob']=date_create($prop['birth_year']."-".$prop['birth_month']."-".$prop[
 if(DEBUG) print_r($prop);
 
 $object = $modx->newObject('StudentCensus');
-foreach($prop as $field){
+foreach($prop as $k=>$field){
     switch($field){
         case 'updated':
             $object->set('created', $prop['updated']);
             $object->set('updated', $prop['updated']);
             break;
         default:
-            $object->set($field, $prop[$field]);
+            $object->set($k, $prop[$k]);
     }
 }
 
@@ -111,7 +111,7 @@ $object->set('prof_status', $prop['prof_status']);
 $object->set('prof_income', $prop['prof_income']);
 $object->set('referer', $prop['referer']);*/
 
-if($object->save()) $response['status']='OK';
+if($object->save()) $response['status']='created';
 else  $response['status']='failed';
 
 $id=$object->get('id');
