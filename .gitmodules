@@ -1,3 +1,6 @@
 [submodule "core/class/restful"]
 	path = core/class/restful
 	url = https://github.com/ershov-ilya/restful.class.php.git
+[submodule "core/class/format"]
+	path = core/class/format
+	url = https://github.com/ershov-ilya/format.class.php.git
