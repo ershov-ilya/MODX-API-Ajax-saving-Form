@@ -15,7 +15,7 @@ docState.check = function(){
         docState.storageStatus='fail';
     }
 
-    if(localStorage['docStateData']===undefined) {console.log('data empty');}
+    if(localStorage['docStateData']===undefined) {if(this.debug) console.log('data empty');}
     else {this.load();}
 };
 
@@ -44,15 +44,16 @@ docState.load = function(){
     var json=localStorage['docStateData'];
     var obj=JSON.parse(localStorage['docStateData']);
     this.data = obj;
-    if(this.debug) console.log('Load done');
-    if(this.debug) console.log(this.data);
+    if(this.debug) {
+        console.log('Load done');
+        console.log(this.data);
+    }
 
     // Заполнение всех полей
     var dat=this.data;
     formControl.check(this.data.interests);
     delete dat.interests;
     for(key in dat){
-        //console.log(key+'>>'+dat[key]);
         formControl.set(synonym.revert[key], dat[key]);
     }
 
@@ -62,7 +63,7 @@ docState.load = function(){
 docState.reset = function(){
     if(this.debug) console.log('Reset:');
     this.flagReset=true;
-    console.log(this);
+    if(this.debug) console.log(this);
     localStorage.removeItem('docStateData');
     $('input').val('');
     $("select option").prop("selected", false);
@@ -97,12 +98,12 @@ function fieldChange(ptr){
     }
 
     if(type=='tel') {
-        console.log('tel: name='+name+' val='+val+' length='+length);
+        if(docState.debug) console.log('tel: name='+name+' val='+val+' length='+length);
         if(length<9) return true;
     }
 
     if(type=='checkbox'){
-        console.log('checkbox change event');
+        if(docState.debug) console.log('checkbox change event');
         var arr=[];
         $('[type=checkbox]:checked').each(function(){
             arr.push($(this).val());
@@ -125,7 +126,7 @@ apicontrol.createObj=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/census/create/";
     data= $.extend({},data,apicontrol.parseGET());
     var success = function (response){
-        console.log(response);
+        if(docState.debug) console.log(response);
         docState.data.id=response.id;
         docState.data.verify=response.verify;
         apicontrol.checkResponse(response);
@@ -187,7 +188,10 @@ apicontrol.parseGET = function(url){
 
 apicontrol.check=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/census/check/";
-    var success = function (response){ console.log(response); apicontrol.checkResponse(response); };
+    var success = function (response){
+        if(docState.debug) console.log(response);
+        apicontrol.checkResponse(response);
+    };
 
     $.ajax({
         type: "POST",
@@ -201,7 +205,7 @@ apicontrol.check=function(data){
 apicontrol.update=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/census/update/";
     var success = function (response){
-        console.log(response);
+        if(docState.debug) console.log(response);
         apicontrol.checkResponse(response);
     };
 
@@ -248,13 +252,13 @@ function supports_html5_storage() {
 apicontrol.checkResponse=function(response) {
     if(docState.debug) {console.log('checkResponse()');}
     if(response.status=='failed') {
-        console.log('Response: "failed"');
+        if(docState.debug) console.log('Response: "failed"');
         if (response.message == 'Wrong verify') {
-            console.log('Сброс формы');
+            if(docState.debug) console.log('Сброс формы');
             docState.reset();
         }
         if (response.message == 'No such object') {
-            console.log('Создаём новый объект');
+            if(docState.debug) console.log('Создаём новый объект');
             apicontrol.createObj(docState.data);
         }
     }
