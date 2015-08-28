@@ -5,3 +5,4 @@ pdo.config.php
 .htaccess
 *.png
 *.private.config.php
+core/class/restful/

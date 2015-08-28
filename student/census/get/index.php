@@ -45,6 +45,7 @@ try {
     }
     if (isset($rest->data['source'])) {
         $filter['source'] = $rest->data['source'];
+        $filter['sourceId'] = '';
     }
     if (isset($rest->data['sourceId'])) {
         $filter['sourceId'] = $rest->data['sourceId'];
