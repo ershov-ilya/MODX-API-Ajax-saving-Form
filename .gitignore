@@ -6,3 +6,4 @@ pdo.config.php
 *.png
 *.private.config.php
 core/class/restful/
+~*
