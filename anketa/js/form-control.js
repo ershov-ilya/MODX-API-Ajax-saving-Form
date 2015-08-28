@@ -18,7 +18,6 @@ formControl.set=function(name, value, checkboxOnly) {
     }
     if (!found) {
         ptr = $('input[type="checkbox"][value="'+name+'"]');
-        console.log(ptr);
         if (ptr && ptr.size()){
             found = true;
             scenario='input-checkbox';
@@ -29,11 +28,11 @@ formControl.set=function(name, value, checkboxOnly) {
 
     if(found){
         if(!scenario) {
-            var select = /select/i;
-            var input = /input/i;
-            var radio = /radio/i;
+            var select  = /select/i;
+            var input   = /input/i;
+            var radio   = /radio/i;
             var checkbox = /checkbox/i;
-            var text = /text/i;
+            var text    = /text/i;
 
             var tag = $(ptr).get(0).tagName;
             var type = $(ptr).attr('type');
@@ -89,7 +88,6 @@ formControl.check=function(arr){
     }
 };
 
-
 formControl.listen = function(){
     // hide all dependences
     $('[data-depends]').each(function(){
@@ -105,11 +103,11 @@ formControl.listen = function(){
         if(size) {
             dependences.each(function () {
                 var selector = $(this).data('depends');
-                var action = $(this).is(':selected');
+                var selected = $(this).is(':selected');
                 console.log('selector: '+selector);
-                console.log('action: '+action);
-                if(!action) {$(selector).fadeOut(300);}
-                if(action) {$(selector).fadeIn(300);}
+                console.log('action: '+selected);
+                if(!selected) {$(selector).find('option').prop('selected',false);$(selector).trigger('change'); $(selector).fadeOut(300);}
+                if(selected) {$(selector).fadeIn(300);}
             });
         }
     });

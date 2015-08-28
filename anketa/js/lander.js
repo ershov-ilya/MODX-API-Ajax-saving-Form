@@ -1,33 +1,7 @@
 /* «Landerr» version 3.0.0 от 20.11.2014 */
-function fieldChange(){
-    var name = $(this).attr("name");
-    var tag = $(this).get(0).tagName;
-    var type = $(this).attr('type');
-    var val;
-    if(tag=='select') {
-        val=$(this).find('option:selected').text();
-    }
-    else{
-        val = $(this).val();
-    }
-    console.log('changed '+ tag+' '+type+' field: '+name+' value:'+val);
-
-    if(type=='checkbox'){
-        var arr=[];
-        $('[type=checkbox]:checked').each(function(){
-            arr.push($(this).val());
-        });
-        if(docState.data.interests===undefined) docState.data.interests=[];
-        docState.data.interests=arr;
-    }else{
-        var sname = synonym.map[name];
-        docState.data[sname]=val;
-    }
-
-    docState.save();
-}
 $("document").ready(function(){
-    if($('body').hasClass('jquery-ui')) {
+    formControl.listen();
+    if($('body').hasClass('autocomplete')) {
         $("#autocomplete-group").autocomplete({
             source: groups_source,
             minLength: 2,
@@ -78,7 +52,7 @@ $("document").ready(function(){
                 $(form).ajaxSubmit({
                     target: $(form),
                     success: function() {
-                        Hash.add("app", "ok");
+                        if(Hash) Hash.add("app", "ok");
                     }
                 });
                 // Блокирование полей и кнопки
@@ -108,11 +82,17 @@ $("document").ready(function(){
                     hint += " (" + maskObj.desc_ru + ")";
                 }
             }
-            docState.data.phone=$('[name=phone]').val();
-            docState.save();
+
+            /*docState.data.phone=$('[name=phone]').val();
+            docState.save();*/
+            fieldChange(this);
+            /*
+            console.log('phone field ');
+            console.log($(this));
+            */
         }
     };
-    $('[name=phone]').each(function(indx){$(this).inputmasks(maskOpts);});
+    $('input[type="tel"]').each(function(indx){$(this).inputmasks(maskOpts);});
     /**/
 
     // Перевод валидации на русский язык

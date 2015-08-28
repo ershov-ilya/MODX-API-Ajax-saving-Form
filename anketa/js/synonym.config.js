@@ -16,23 +16,31 @@ synonym.refresh = function(){
 };
 
 synonym.map ={
-    surname 	:	'secondname',
-    name		:	'name',
-    patronymic	:	'patronymic',
-    birth_day	:	'birth_day',
-    birth_month	:	'birth_month',
-    birth_year	:	'birth_year',
-    gender	    :	'gender',
-    learning_team:	'studgroup',
-    branch	    :	'affiliate',
-    phone	    :	'phone',
-    email	    :	'email',
-    fio_mother	:	'mother_fullname',
-    mother_phone:	'mother_phone',
-    fio_father	:	'father_fullname',
-    father_phone:	'father_phone',
-    vk_id	    :	'vkcomID',
-    interests	:	'interests'
+    name		    :	'name',
+    surname 	    :	'secondname',
+    patronymic	    :	'patronymic',
+    birth_day	    :	'birth_day',
+    birth_month	    :	'birth_month',
+    birth_year	    :	'birth_year',
+    gender	        :	'gender',
+    learning_team   :	'studgroup',
+    branch	        :	'affiliate',
+    phone	        :	'phone',
+    email	        :	'email',
+    contact1_name   :  'contact1_name',
+    contact1_phone  :  'contact1_phone',
+    contact2_name   :  'contact2_name',
+    contact2_phone  :  'contact2_phone',
+    contact3_name   :  'contact3_name',
+    contact3_phone  :  'contact3_phone',
+    vk_id	        :	'vk_id',
+    interests	    :	'interests',
+    prof_experience :   'prof_experience',
+    prof_plan       :   'prof_plan',
+    prof_orientation:   'prof_orientation',
+    prof_status     :   'prof_status',
+    prof_income     :   'prof_income',
+    referer         :   'referer'
 };
 
 /* Usage
