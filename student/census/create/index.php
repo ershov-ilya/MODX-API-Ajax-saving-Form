@@ -22,10 +22,14 @@ defined('DEBUG') or define('DEBUG',false);
 
 $response=array();
 
+// Include MODX
 define('MODX_API_MODE', true);
-require('../../../../../index.php');
+require_once('../../../../../index.php');
 
-if(DEBUG) {print 'DEBUG'.PHP_EOL; die;}
+// Include classes
+require_once('../../../core/config/api.private.config.php');
+require_once(API_CORE_PATH.'/class/restful/restful.class.php');
+$rest=new RESTful('create','sign,created,updated,name,secondname,patronymic,dob,gender,studgroup,affiliate,phone,email,contact1_name,contact1_phone,contact2_name,contact2_phone,contact3_name,contact3_phone,vk_id,interests,prof_experience,prof_plan,prof_orientation,prof_status,prof_income,referer,source,sourceId');
 
 /** @var modX $modx */
 /** @var modObject $obj */
@@ -63,11 +67,23 @@ $prop=array(
     'prof_income'=>'',
     'referer'=>''
 );
-$prop=array_merge($prop, $_REQUEST);
+$prop=array_merge($prop, $rest->data);
 $prop['dob']=date_create($prop['birth_year']."-".$prop['birth_month']."-".$prop['birth_day']);
 if(DEBUG) print_r($prop);
 
 $object = $modx->newObject('StudentCensus');
+foreach($prop as $field){
+    switch($field){
+        case 'updated':
+            $object->set('created', $prop['updated']);
+            $object->set('updated', $prop['updated']);
+            break;
+        default:
+            $object->set($field, $prop[$field]);
+    }
+}
+
+/*
 $object->set('sign', $prop['sign']);
 $object->set('created', $prop['updated']);
 $object->set('updated', $prop['updated']);
@@ -93,7 +109,8 @@ $object->set('prof_plan', $prop['prof_plan']);
 $object->set('prof_orientation', $prop['prof_orientation']);
 $object->set('prof_status', $prop['prof_status']);
 $object->set('prof_income', $prop['prof_income']);
-$object->set('referer', $prop['referer']);
+$object->set('referer', $prop['referer']);*/
+
 if($object->save()) $response['status']='OK';
 else  $response['status']='failed';
 
