@@ -9,20 +9,20 @@
     <link href="css/typography.css" rel="stylesheet" type="text/css"/>
     <link href="css/jquery-ui.css" rel="stylesheet" />
 </head>
-<body class="jquery-ui">
+<body class="jquery-ui autocomplete">
 <div id="container">
     <div id="section1" class="section">
-    <form action="step2.htm" method="POST" class="application">
+    <form action="contacts.htm" method="POST" class="application">
     	<div class="block bg1">
         	<div class="in-block navi1">
                 <p><span>*</span> Поля обязательные для заполнения</p>
                 <div>
-                    <div class="label">Имя <span>*</span></div>
-                    <input type="text" name="name" id="name" required>
-                </div>
-                <div>
                 	<div class="label">Фамилия <span>*</span></div>
                     <input type="text" name="surname" id="secondname" required>
+                </div>
+                <div>
+                    <div class="label">Имя <span>*</span></div>
+                    <input type="text" name="name" id="name" required>
                 </div>
                 <div>
                     <div class="label">Отчество <span>*</span></div>
@@ -138,6 +138,7 @@
                     <div class="label">Филиал</div>
                     <select name="branch" required>
                     <option value=""></option>
+                        <option value="Москва">Москва</option>
 <optgroup label="Филиалы">
     <option value="Карачаево-Черкесский">Карачаево-Черкесский</option>
     <option value="Калмыцкий">Калмыцкий</option>
@@ -224,7 +225,7 @@
 </div>
                 <div>
                 	<div class="label"></div>
-                    <button type="submit" class="next">Далее ></button>
+                    <a href="contacts.htm" class="next">Далее &gt;</a>
                 </div>
         	</div>
         </div>
