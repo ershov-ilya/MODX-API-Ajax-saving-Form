@@ -21,7 +21,8 @@ if(isset($_GET['t'])){define('DEBUG',true);}
 defined('DEBUG') or define('DEBUG',false);
 
 $response=array(
-    'status'    => 'OK'
+    'status'    => 'OK',
+    'code'    => 200
 );
 $filter=array();
 $format='json';
@@ -53,29 +54,15 @@ try {
         throw new Exception('Filter array empty', 403);
     }
 
-    if ($response['status'] != 'failed') {
-        $object = $modx->getObject('StudentCensus', $filter);
-        $data = $object->toArray();
+    $object = $modx->getObject('StudentCensus', $filter);
+    if(gettype($object)=='NULL'){
+        throw new Exception('Not found', 404);
     }
 
-    if (DEBUG) {
-        print_r($data);
-    }
-
-    /* Обход проверки
-    $response['status']='OK';
-    if($data) $response['data']=$data;
-    /**/
-// Проверка хэша
-// id=18&verify=66e7cb9c266a7e495b89eb36363d44bd8c11c2d51b5fddfc0de780a1358d6685
-    if ($data['sign'] == $_REQUEST['verify']) {
-        $response['status'] = 'OK';
-        $response['data'] = $data;
-    } else {
-        unset($response);
-        $response['status'] = 'failed';
-        $response['message'] = 'Wrong verify';
-    }
+    $data = $object->toArray();
+    unset($data['sign']);
+    $response['status']='found';
+    $response['data']=$data;
 }
 catch(Exception $e){
     $response['status'] = 'failed';
@@ -84,4 +71,4 @@ catch(Exception $e){
 }
 
 require_once(API_CORE_PATH.'/class/format/format.class.php');
-print Format::parse($response, $format);
+die(Format::parse($response, $format));
