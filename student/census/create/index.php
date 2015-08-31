@@ -69,7 +69,11 @@ $prop=array(
 );
 $prop=array_merge($prop, $rest->data);
 $prop['dob']=date_create($prop['birth_year']."-".$prop['birth_month']."-".$prop['birth_day']);
-if(DEBUG) print_r($prop);
+$prop['modxuserid']=$modx->user->id;
+if(DEBUG) {
+    print_r($prop);
+    die;
+}
 
 $object = $modx->newObject('StudentCensus');
 foreach($prop as $k=>$field){
