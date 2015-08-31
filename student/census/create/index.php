@@ -29,7 +29,7 @@ require_once('../../../../../index.php');
 // Include classes
 require_once('../../../core/config/api.private.config.php');
 require_once(API_CORE_PATH.'/class/restful/restful.class.php');
-$rest=new RESTful('create','sign,created,updated,name,secondname,patronymic,dob,gender,studgroup,affiliate,phone,email,contact1_name,contact1_phone,contact2_name,contact2_phone,contact3_name,contact3_phone,vk_id,interests,prof_experience,prof_plan,prof_orientation,prof_status,prof_income,referer,source,sourceId');
+$rest=new RESTful('create','sign,created,updated,name,secondname,patronymic,dob,gender,studgroup,affiliate,phone,email,contact1_name,contact1_phone,contact2_name,contact2_phone,contact3_name,contact3_phone,vk_id,interests,prof_experience,prof_plan,prof_orientation,prof_status,prof_income,referer,source,sourceId,http_referer');
 
 /** @var modX $modx */
 /** @var modObject $obj */

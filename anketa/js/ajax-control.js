@@ -4,7 +4,7 @@
 var docState={data:{},changes:false,debug:false,flagReset:false};
 var apicontrol={
     config:{
-        get_keys:['source','sourceId']
+        get_keys:['source','sourceId','referer_url']
     }
 };
 

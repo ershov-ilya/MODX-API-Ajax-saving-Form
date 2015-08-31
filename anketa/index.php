@@ -243,6 +243,9 @@
     <script type="text/javascript" src="js/form-control.js"></script>
     <script type="text/javascript" src="js/ajax-control.js"></script>
     <script type="text/javascript" src="js/lander.js"></script>
+    <script type="text/javascript">
+        docState.data.http_referer="<?=$_SERVER['HTTP_REFERER'];?>";
+    </script>
 <!--[if lt IE 9]>
     <script src="http://css3-mediaqueries-js.googlecode.com/files/css3-mediaqueries.js"></script>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
