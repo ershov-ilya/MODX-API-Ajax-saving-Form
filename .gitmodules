@@ -4,3 +4,6 @@
 [submodule "core/class/format"]
 	path = core/class/format
 	url = https://github.com/ershov-ilya/format.class.php.git
+[submodule "assets/parse-get"]
+	path = assets/parse-get
+	url = https://github.com/ershov-ilya/parse-get.js.git
