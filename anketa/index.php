@@ -243,6 +243,7 @@
     <script type="text/javascript" src="js/form-control.js"></script>
     <script type="text/javascript" src="js/ajax-control.js"></script>
     <script type="text/javascript" src="js/lander.js"></script>
+    <script type="text/javascript" src="../assets/parse-get/parse-get.js"></script>
     <script type="text/javascript">
         docState.data.http_referer="<?=$_SERVER['HTTP_REFERER'];?>";
     </script>
