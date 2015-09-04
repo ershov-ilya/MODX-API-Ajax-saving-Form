@@ -1,7 +1,7 @@
 /**
  * Created by IErshov on 11.12.2014.
  */
-var docState={data:{},changes:false,debug:true,flagReset:false};
+var docState={data:{},changes:false,debug:false,flagReset:false};
 var apicontrol={
     config:{
         get_keys:['source','sourceId','referer_url']
