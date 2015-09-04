@@ -20,7 +20,11 @@ ini_set("display_errors", 1);
 if(isset($_GET['t'])){define('DEBUG',true);}
 defined('DEBUG') or define('DEBUG',false);
 
-$response=array();
+$response=array(
+    'code'  => 204
+);
+$format='json';
+if(DEBUG) $format='php';
 
 // Include MODX
 define('MODX_API_MODE', true);
@@ -28,99 +32,109 @@ require_once('../../../../../index.php');
 /** @var modX $modx */
 /** @var modObject $obj */
 
+try {
 // Include classes
-require_once('../../../core/config/api.private.config.php');
-require_once(API_CORE_PATH.'/class/restful/restful.class.php');
-$rest=new RESTful('create','sign,created,updated,name,secondname,patronymic,dob,gender,studgroup,affiliate,phone,email,contact1_name,contact1_phone,contact2_name,contact2_phone,contact3_name,contact3_phone,vk_id,interests,prof_experience,prof_plan,prof_orientation,prof_status,prof_income,referer,source,sourceId,http_referer');
+    require_once('../../../core/config/api.private.config.php');
+    require_once(API_CORE_PATH . '/class/restful/restful.class.php');
+    $rest = new RESTful('create', 'create,created,updated,name,secondname,patronymic,dob,gender,studgroup,affiliate,phone,email,contact1_name,contact1_phone,contact2_name,contact2_phone,contact3_name,contact3_phone,vk_id,interests,prof_experience,prof_plan,prof_orientation,prof_status,prof_income,referer,source,sourceId,http_referer');
 
 //print $modx->parseChunk('hello_world', array());
-$hours3=60*60*3;
-$time=time()+$hours3;
-$prop=array(
-    'sign' => hash('sha256', rand()),
-    'created'=>$time,
-    'updated'=>$time,
-    'name' => '',
-    'secondname' => '',
-    'patronymic'=>'',
-    'birth_day' => '1',
-    'birth_month' => '1',
-    'birth_year' => '1970',
-    'dob'=>'0',
-    'gender'=>'0',
-    'studgroup'=>'',
-    'affiliate'=>'',
-    'phone'=>'',
-    'email'=>'',
-    'contact1_name'=>'',
-    'contact1_phone'=>'',
-    'contact2_name'=>'',
-    'contact2_phone'=>'',
-    'contact3_name'=>'',
-    'contact3_phone'=>'',
-    'vk_id'=>'',
-    'interests'=>'',
-    'prof_experience'=>'',
-    'prof_plan'=>'',
-    'prof_orientation'=>'',
-    'prof_status'=>'',
-    'prof_income'=>'',
-    'referer'=>''
-);
-$prop=array_merge($prop, $rest->data);
-$prop['dob']=date_create($prop['birth_year']."-".$prop['birth_month']."-".$prop['birth_day']);
-$prop['modxuserid']=$modx->user->id;
-if(DEBUG) {
-    print_r($prop);
-    die;
-}
+    $hours3 = 60 * 60 * 3;
+    $time = time() + $hours3;
+    $prop = array(
+        'sign' => hash('sha256', rand()),
+        'created' => $time,
+        'updated' => $time,
+        'name' => '',
+        'secondname' => '',
+        'patronymic' => '',
+        'dob' => '0',
+        'gender' => '0',
+        'studgroup' => '',
+        'affiliate' => '',
+        'phone' => '',
+        'email' => '',
+        'contact1_name' => '',
+        'contact1_phone' => '',
+        'contact2_name' => '',
+        'contact2_phone' => '',
+        'contact3_name' => '',
+        'contact3_phone' => '',
+        'vk_id' => '',
+        'interests' => '',
+        'prof_experience' => '',
+        'prof_plan' => '',
+        'prof_orientation' => '',
+        'prof_status' => '',
+        'prof_income' => '',
+        'referer' => ''
+    );
 
-$object = $modx->newObject('StudentCensus');
-foreach($prop as $k=>$v){
-    switch($k){
-        case 'updated':
-            $object->set('created', $prop['updated']);
-            $object->set('updated', $prop['updated']);
-            break;
-        default:
-            $object->set($k, $v);
+    // Преобразование даты рождения
+    if(isset($rest->data['birth_year']) || isset($rest->data['birth_month']) || isset($rest->data['birth_day'])) {
+        $bd=array(
+            'birth_day' => ($rest->data['birth_day'])?($rest->data['birth_day']):'1',
+            'birth_month' => ($rest->data['birth_month'])?($rest->data['birth_month']):'1',
+            'birth_year' => ($rest->data['birth_year'])?$rest->data['birth_year']:'1970'
+        );
+        $prop=array_merge($prop, $bd);
+        $prop['dob'] = date_timestamp_get(date_create($bd['birth_year'] . "-" . $bd['birth_month'] . "-" . $bd['birth_day']));
     }
+
+    $prop = array_merge($rest->data,$prop);
+    unset($prop['birth_year']);
+    unset($prop['birth_month']);
+    unset($prop['birth_day']);
+    $prop['modxuserid'] = $modx->user->id;
+
+    $object = $modx->newObject('StudentCensus');
+    foreach ($prop as $k => $v) {
+        switch ($k) {
+            case 'create':
+                // Ignore
+                break;
+            default:
+                $object->set($k, $v);
+        }
+    }
+
+    if (DEBUG) {
+        print_r($prop);
+        print "Object creation: \n";
+        if(gettype($object)=='object'){
+            print_r($object->toArray());
+        }
+//        throw new Exception('DEBUG stop',200);
+    }
+    $res=$object->save();
+    if(DEBUG){
+        var_dump($res);
+        //throw new Exception('DEBUG stop',200);
+    }
+
+    if ($res) $response['status'] = 'OK';
+    else  {
+        $response['status'] = 'failed';
+        throw new Exception('Failed to save',500);
+    }
+
+
+    $id = $object->get('id');
+
+    $response = array(
+        'status' => 'OK',
+        'verify'=> $prop['sign'],
+        'message' => 'Created successfully'
+    );
+
+    unset($prop['sign']);
+    $response['data']=$prop;
+    $response['data']['id'] = $id;
+}
+catch(Exception $e){
+    $response['message']=$e->getMessage();
+    $response['code']=$e->getCode();
 }
 
-/*
-$object->set('sign', $prop['sign']);
-$object->set('created', $prop['updated']);
-$object->set('updated', $prop['updated']);
-$object->set('name', $prop['name']);
-$object->set('secondname', $prop['secondname']);
-$object->set('patronymic', $prop['patronymic']);
-$object->set('dob', $prop['dob']);
-$object->set('gender', $prop['gender']);
-$object->set('studgroup', $prop['studgroup']);
-$object->set('affiliate', $prop['affiliate']);
-$object->set('phone', $prop['phone']);
-$object->set('email', $prop['email']);
-$object->set('contact1_name', $prop['contact1_name']);
-$object->set('contact1_phone', $prop['contact1_phone']);
-$object->set('contact2_name', $prop['contact2_name']);
-$object->set('contact2_phone', $prop['contact2_phone']);
-$object->set('contact3_name', $prop['contact3_name']);
-$object->set('contact3_phone', $prop['contact3_phone']);
-$object->set('vk_id', $prop['vk_id']);
-$object->set('interests', serialize($prop['interests']));
-$object->set('prof_experience', $prop['prof_experience']);
-$object->set('prof_plan', $prop['prof_plan']);
-$object->set('prof_orientation', $prop['prof_orientation']);
-$object->set('prof_status', $prop['prof_status']);
-$object->set('prof_income', $prop['prof_income']);
-$object->set('referer', $prop['referer']);*/
-
-if($object->save()) $response['status']='created';
-else  $response['status']='failed';
-
-$id=$object->get('id');
-$response['id']=$id;
-$response['verify']=$prop['sign'];
-
-$json=json_encode($response);
-print $json;
+require_once(API_CORE_PATH.'/class/format/format.class.php');
+print Format::parse($response, $format);

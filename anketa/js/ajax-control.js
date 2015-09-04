@@ -1,7 +1,7 @@
 /**
  * Created by IErshov on 11.12.2014.
  */
-var docState={data:{},changes:false,debug:false,flagReset:false};
+var docState={data:{},changes:false,debug:true,flagReset:false};
 var apicontrol={
     config:{
         get_keys:['source','sourceId','referer_url']
@@ -124,7 +124,8 @@ function fieldChange(ptr){
 --------------------------------------*/
 apicontrol.createObj=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/census/create/";
-    data= $.extend({},data,apicontrol.parseGET());
+    data= $.extend({create:true},data,apicontrol.parseGET());
+
     var success = function (response){
         if(docState.debug) console.log(response);
         docState.data.id=response.id;
