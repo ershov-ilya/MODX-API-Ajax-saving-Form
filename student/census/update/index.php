@@ -35,8 +35,7 @@ try {
 // Include classes
     require_once('../../../core/config/api.private.config.php');
     require_once(API_CORE_PATH . '/class/restful/restful.class.php');
-    $rest = new RESTful('update', 'sign,created,updated,name,secondname,patronymic,dob,gender,studgroup,affiliate,phone,email,contact1_name,contact1_phone,contact2_name,contact2_phone,contact3_name,contact3_phone,vk_id,interests,prof_experience,prof_plan,prof_orientation,prof_status,prof_income,referer,source,sourceId,http_referer');
-
+    $rest = new RESTful('update', 'verify,created,updated,name,secondname,patronymic,dob,gender,studgroup,affiliate,phone,email,contact1_name,contact1_phone,contact2_name,contact2_phone,contact3_name,contact3_phone,vk_id,interests,prof_experience,prof_plan,prof_orientation,prof_status,prof_income,referer,source,sourceId,http_referer');
 
     $hours3 = 60 * 60 * 3;
     $time = time() + $hours3;
@@ -69,16 +68,9 @@ try {
         throw new Exception('No such object',404);
     }
 
-    if (DEBUG) {
-        print_r($rest->data);
-        print_r($data);
-        print_r($prop);
-        throw new Exception('Stop',200);
-    }
-
     // Проверка хэша
     // id=18&verify=66e7cb9c266a7e495b89eb36363d44bd8c11c2d51b5fddfc0de780a1358d6685
-    if (($data['sign'] == $_REQUEST['verify'])) {
+    if (($data['sign'] == $rest->data['verify'])) {
         $response['status'] = 'OK';
         $response['data'] = $data;
     } else {
@@ -86,6 +78,13 @@ try {
         $response['status'] = 'failed';
         throw new Exception('Wrong verify',403);
    }
+
+    if (DEBUG) {
+        print_r($rest->data);
+        print_r($data);
+        print_r($prop);
+        throw new Exception('Stop',200);
+    }
 
     if ($response['status'] != 'failed') {
         $object->set('updated', $prop['updated']);
@@ -145,7 +144,3 @@ catch(Exception $e){
 
 require_once(API_CORE_PATH.'/class/format/format.class.php');
 print Format::parse($response, $format);
-
-//$json=json_encode($response);
-//print $json;
-
