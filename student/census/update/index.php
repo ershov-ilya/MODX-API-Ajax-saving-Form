@@ -88,26 +88,30 @@ try {
         $response['status'] = 'failed';
         throw new Exception('Wrong verify',403);
    }
+    unset($prop['id']);
     unset($prop['verify']);
 
-    if (DEBUG) {
-        print_r($rest->data);
-        print_r($prop);
-        print_r($data);
-        //throw new Exception('Stop',200);
-    }
-
+//    if (DEBUG) {
+//        print_r($rest->data);
+//        print_r($prop);
+//        print_r($data);
+//        //throw new Exception('Stop',200);
+//    }
 
     foreach($prop as $k=>$v){
         switch($k){
             case 'source':
                 if(empty($data['source'])){
                     $object->set('source', $prop['source']);
+                }else{
+                    unset($prop['source']);
                 }
                 break;
             case 'sourceId':
                 if(empty($data['sourceId'])){
                     $object->set('sourceId', $prop['sourceId']);
+                }else{
+                    unset($prop['sourceId']);
                 }
                 break;
             case 'interests':
@@ -121,31 +125,6 @@ try {
                 $object->set($k, $v);
         }
     }
-
-//    $object->set('updated', $prop['updated']);
-//    if (isset($prop['name'])) $object->set('name', $prop['name']);
-//    if (isset($prop['secondname'])) $object->set('secondname', $prop['secondname']);
-//    if (isset($prop['patronymic'])) $object->set('patronymic', $prop['patronymic']);
-//    if (isset($prop['dob'])) $object->set('dob', $prop['dob']);
-//    if (isset($prop['gender'])) $object->set('gender', $prop['gender']);
-//    if (isset($prop['studgroup'])) $object->set('studgroup', $prop['studgroup']);
-//    if (isset($prop['affiliate'])) $object->set('affiliate', $prop['affiliate']);
-//    if (isset($prop['phone'])) $object->set('phone', $prop['phone']);
-//    if (isset($prop['email'])) $object->set('email', $prop['email']);
-//    if (isset($prop['contact1_name'])) $object->set('contact1_name', $prop['contact1_name']);
-//    if (isset($prop['contact1_phone'])) $object->set('contact1_phone', $prop['contact1_phone']);
-//    if (isset($prop['contact2_name'])) $object->set('contact2_name', $prop['contact2_name']);
-//    if (isset($prop['contact2_phone'])) $object->set('contact2_phone', $prop['contact2_phone']);
-//    if (isset($prop['contact3_name'])) $object->set('contact3_name', $prop['contact3_name']);
-//    if (isset($prop['contact3_phone'])) $object->set('contact3_phone', $prop['contact3_phone']);
-//    if (isset($prop['vk_id'])) $object->set('vk_id', $prop['vk_id']);
-//    if (isset($prop['interests'])) $object->set('interests', serialize($prop['interests']));
-//    if (isset($prop['prof_experience'])) $object->set('prof_experience', $prop['prof_experience']);
-//    if (isset($prop['prof_plan'])) $object->set('prof_plan', $prop['prof_plan']);
-//    if (isset($prop['prof_orientation'])) $object->set('prof_orientation', $prop['prof_orientation']);
-//    if (isset($prop['prof_status'])) $object->set('prof_status', $prop['prof_status']);
-//    if (isset($prop['prof_income'])) $object->set('prof_income', $prop['prof_income']);
-//    if (isset($prop['referer'])) $object->set('referer', $prop['referer']);
 
     if ($object->save()) $response['status'] = 'OK';
     else  {

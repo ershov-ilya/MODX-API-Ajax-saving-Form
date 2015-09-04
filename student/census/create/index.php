@@ -76,14 +76,14 @@ if(DEBUG) {
 }
 
 $object = $modx->newObject('StudentCensus');
-foreach($prop as $k=>$field){
-    switch($field){
+foreach($prop as $k=>$v){
+    switch($k){
         case 'updated':
             $object->set('created', $prop['updated']);
             $object->set('updated', $prop['updated']);
             break;
         default:
-            $object->set($k, $prop[$k]);
+            $object->set($k, $v);
     }
 }
 
