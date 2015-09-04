@@ -204,6 +204,7 @@ apicontrol.check=function(data){
 
 apicontrol.update=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/census/update/";
+    data= $.extend({},data,apicontrol.parseGET());
     var success = function (response){
         if(docState.debug) console.log(response);
         apicontrol.checkResponse(response);

@@ -25,14 +25,14 @@ $response=array();
 // Include MODX
 define('MODX_API_MODE', true);
 require_once('../../../../../index.php');
+/** @var modX $modx */
+/** @var modObject $obj */
 
 // Include classes
 require_once('../../../core/config/api.private.config.php');
 require_once(API_CORE_PATH.'/class/restful/restful.class.php');
 $rest=new RESTful('create','sign,created,updated,name,secondname,patronymic,dob,gender,studgroup,affiliate,phone,email,contact1_name,contact1_phone,contact2_name,contact2_phone,contact3_name,contact3_phone,vk_id,interests,prof_experience,prof_plan,prof_orientation,prof_status,prof_income,referer,source,sourceId,http_referer');
 
-/** @var modX $modx */
-/** @var modObject $obj */
 //print $modx->parseChunk('hello_world', array());
 $hours3=60*60*3;
 $time=time()+$hours3;
