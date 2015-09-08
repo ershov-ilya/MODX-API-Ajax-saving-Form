@@ -123,6 +123,7 @@ try {
     $id = $object->get('id');
 
     $response = array(
+        'id' => $id,
         'status' => 'OK',
         'verify'=> $prop['sign'],
         'message' => 'Created successfully'
