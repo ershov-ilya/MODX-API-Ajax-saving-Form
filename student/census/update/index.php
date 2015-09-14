@@ -132,15 +132,14 @@ try {
         throw new Exception('Failed to save',500);
     }
 
-    $id = $object->get('id');
-
     $response = array(
         'status' => 'OK',
         'data' => $prop,
         'message' => 'Saved successfully'
     );
 
-    $response['data']['id'] = $id;
+    $response['data']['id'] = $object->get('id');
+    $response['data']['source'] = $object->get('source');
 }
 catch(Exception $e){
     $response['message']=$e->getMessage();

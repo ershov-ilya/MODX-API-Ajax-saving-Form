@@ -23,6 +23,7 @@ defined('DEBUG') or define('DEBUG',false);
 $response=array(
     'status'    => 'OK'
 );
+$object=null;
 $filter=array();
 $format='json';
 if(isset($_REQUEST['format'])) $format=$_REQUEST['format'];
@@ -71,6 +72,7 @@ try {
     if ($data['sign'] == $_REQUEST['verify']) {
         $response['status'] = 'OK';
         $response['data'] = $data;
+        $response['data']['source'] = $object->get('source');
     } else {
         unset($response);
         $response['status'] = 'failed';

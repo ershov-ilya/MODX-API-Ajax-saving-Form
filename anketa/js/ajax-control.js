@@ -1,7 +1,7 @@
 /**
  * Created by IErshov on 11.12.2014.
  */
-var docState={data:{},changes:false,debug:false,flagReset:false};
+var docState={data:{},changes:false,debug:true,flagReset:false};
 var apicontrol={
     config:{
         get_keys:['source','sourceId','referer_url']
@@ -58,6 +58,15 @@ docState.load = function(){
     }
 
     this.flagLock=false;
+};
+
+docState.redirect = function() {
+    console.log(docState.data);
+    switch(docState.data.source){
+        case 'EPOS':
+            console.log('http://www.megacampus.ru');
+        break;
+    }
 };
 
 docState.reset = function(){
@@ -252,6 +261,13 @@ function supports_html5_storage() {
 }
 
 apicontrol.checkResponse=function(response) {
+    if(typeof response.data.source == 'undefined') response.data.source="";
+    if(typeof docState.data.source == 'undefined') docState.data.source="";
+    if(response.data.source > docState.data.source){
+        docState.data.source=response.data.source;
+        docState.save();
+    }
+
     if(docState.debug) {console.log('checkResponse()');}
     if(response.status=='failed') {
         if(docState.debug) console.log('Response: "failed"');
