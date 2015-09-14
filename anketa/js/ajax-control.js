@@ -1,7 +1,7 @@
 /**
  * Created by IErshov on 11.12.2014.
  */
-var docState={data:{},changes:false,debug:true,flagReset:false};
+var docState={data:{},changes:false,debug:false,flagReset:false};
 var apicontrol={
     config:{
         get_keys:['source','sourceId','referer_url']
@@ -61,12 +61,19 @@ docState.load = function(){
 };
 
 docState.redirect = function() {
-    console.log(docState.data);
-    switch(docState.data.source){
+    var source=docState.data.source;
+    docState.reset();
+    switch(source){
         case 'EPOS':
-            console.log('http://www.megacampus.ru');
+            window.location.replace("http://www.megacampus.ru");
+            window.location.href = "http://www.megacampus.ru";
+            return false;
         break;
     }
+    window.location.replace("http://suniversity.ru/form/student_census/complete.htm");
+    window.location.href = "http://suniversity.ru/form/student_census/complete.htm";
+
+    return false;
 };
 
 docState.reset = function(){
