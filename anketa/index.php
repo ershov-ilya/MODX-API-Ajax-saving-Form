@@ -236,15 +236,15 @@
     <script src="js/jquery-ui.min.js" type="text/javascript"></script>
     <script src="js/groups.js" type="text/javascript"></script>
 
-    <script type="text/javascript" src="js/jquery.form-placeholder.min.js"></script>
-    <script type="text/javascript" src="js/jquery.inputmask-multi-bind.js"></script> 
-    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="js/synonym.config.js"></script>
-    <script type="text/javascript" src="assets/parse-get/parse-get.min.js"></script>
-    <script type="text/javascript" src="js/js.cookie.js"></script>
-    <script type="text/javascript" src="js/form-control.js"></script>
-    <script type="text/javascript" src="js/ajax-control.js"></script>
-    <script type="text/javascript" src="js/lander.js"></script>
+    <script type="text/javascript" src="js/jquery.form-placeholder.min.js?v2"></script>
+    <script type="text/javascript" src="js/jquery.inputmask-multi-bind.js?v2"></script>
+    <script type="text/javascript" src="js/jquery.validate.min.js?v2"></script>
+    <script type="text/javascript" src="js/synonym.config.js?v2"></script>
+    <script type="text/javascript" src="assets/parse-get/parse-get.min.js?v2"></script>
+    <script type="text/javascript" src="js/js.cookie.js?v2"></script>
+    <script type="text/javascript" src="js/form-control.js?v2"></script>
+    <script type="text/javascript" src="js/ajax-control.js?v2"></script>
+    <script type="text/javascript" src="js/lander.js?v2"></script>
     <script type="text/javascript">
         var ref="<?=$_SERVER['HTTP_REFERER'];?>";
         if(ref) docState.data.http_referer=ref;
