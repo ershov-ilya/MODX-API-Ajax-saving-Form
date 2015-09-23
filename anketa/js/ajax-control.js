@@ -49,6 +49,17 @@ docState.load = function(){
         console.log(this.data);
     }
 
+    if(typeof Cookies == 'function'){
+        var person=Cookies.get('person');
+        person=JSON.parse(person);
+        if(this.debug) {
+            console.log('Cookies person load done');
+            console.log(person);
+            console.log(this.data);
+        }
+        this.data= $.extend(this.data, person);
+    }
+
     // Заполнение всех полей
     var dat=this.data;
     formControl.check(this.data.interests);
@@ -81,6 +92,9 @@ docState.reset = function(){
     this.flagReset=true;
     if(this.debug) console.log(this);
     localStorage.removeItem('docStateData');
+    if(typeof Cookies == 'function'){
+        Cookies.remove('person');
+    }
     $('input').val('');
     $("select option").prop("selected", false);
     $('input[type="checkbox"]').prop("checked", false);
@@ -151,6 +165,9 @@ apicontrol.createObj=function(data){
         if(docState.debug) console.log(response);
         docState.data.id=response.id;
         docState.data.verify=response.verify;
+        if(typeof Cookies == 'function'){
+            Cookies.set('person',{id:response.id,verify:response.verify});
+        }
         apicontrol.checkResponse(response);
     });
 };
@@ -232,6 +249,31 @@ apicontrol.update=function(data){
     }).always(success);
 };
 
+apicontrol.validate=function(silent){
+    if(docState.debug) console.log('vaildate() start');
+    $('.validate-error').remove();
+    var required=['secondname','name','patronymic','email','phone'];
+    var val;
+    var OK=true;
+    for(var i=0; i<required.length; i++){
+        switch(required[i]){
+            default:
+                val=docState.data[required[i]];
+                if((typeof val == 'undefined' || val == '') && $('#'+required[i]).size()) {
+                    if(!silent) {
+                        $('#' + synonym.map[required[i]]).after('<span class="error validate-error">Необходимо заполнить</span>').one('change', function () {
+                            $(this).parent().find('.validate-error').remove();
+                        });
+                    }
+                    OK=false;
+                }
+        }
+    }
+
+    if(OK) return true;
+    return false;
+};
+
 apicontrol.tick=function(){
     if(docState.debug) console.log('tick');
     if(docState.changes){
@@ -240,7 +282,8 @@ apicontrol.tick=function(){
         // Отправка данных в API
         if(docState.data.id===undefined || docState.data.verify===undefined)
         {
-            apicontrol.createObj(docState.data);
+            if(apicontrol.validate(true))
+                apicontrol.createObj(docState.data);
         }else{
             apicontrol.update(docState.data);
         }

@@ -124,11 +124,11 @@
                 </div>
                 <div>
                     <div class="label">Тел. моб. <span>*</span></div>
-                    <input type="tel" name="phone" placeholder="+7 (915) 123-45-67" required>
+                    <input type="tel" name="phone" id="phone" placeholder="+7 (915) 123-45-67" required>
                 </div>
                 <div>
                     <div class="label">E-mail <span>*</span></div>
-                    <input type="email" name="email" placeholder="your_name@mail.ru" required>
+                    <input type="email" name="email" id="email" placeholder="your_name@mail.ru" required>
                 </div>
                 <div>
                     <div class="label label2">Учебная группа</div>
@@ -225,7 +225,7 @@
 </div>
                 <div>
                 	<div class="label"></div>
-                    <a href="contacts.htm" class="next">Далее &gt;</a>
+                    <a href="contacts.htm" onclick="javascript:return apicontrol.validate();" class="next">Далее &gt;</a>
                 </div>
         	</div>
         </div>

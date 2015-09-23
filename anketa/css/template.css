@@ -28,3 +28,7 @@ label.error{display: none !important;}
 input.error{background: #FFD1D3;}
 .send-success, .send-error, .send-duplicate h3{color: red !important;}
 .send-success, .send-error, .send-duplicate p{color: dimgray !important;}
+
+.validate-error {
+    padding-left: 140px;
+}
