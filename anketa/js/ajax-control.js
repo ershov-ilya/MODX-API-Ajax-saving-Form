@@ -140,21 +140,18 @@ function fieldChange(ptr){
 --------------------------------------*/
 apicontrol.createObj=function(data){
     var url = "http://crm.syndev.ru/api/v1/student/census/create/";
-    data= $.extend({create:true},data,apicontrol.parseGET());
-
-    var success = function (response){
-        if(docState.debug) console.log(response);
-        docState.data.id=response.id;
-        docState.data.verify=response.verify;
-        apicontrol.checkResponse(response);
-    };
+    var params = $.extend({create:true},data,apicontrol.parseGET());
 
     $.ajax({
         type: "POST",
         dataType: "json",
         url: url,
-        data: data,
-        success: success
+        data: params,
+    }).success(function (response){
+        if(docState.debug) console.log(response);
+        docState.data.id=response.id;
+        docState.data.verify=response.verify;
+        apicontrol.checkResponse(response);
     });
 };
 

@@ -15,6 +15,9 @@ header('Access-Control-Allow-Credentials: true');
 error_reporting(E_ERROR | E_WARNING);
 ini_set("display_errors", 1);
 
+if(isset($_GET['t'])) define('DEBUG',true);
+defined('DEBUG') or define('DEBUG',false);
+
 /* Init
 -------------------------------------------------*/
 if(isset($_GET['t'])){define('DEBUG',true);}
@@ -39,6 +42,7 @@ try {
     $rest = new RESTful('create', 'create,created,updated,name,secondname,patronymic,dob,gender,studgroup,affiliate,phone,email,contact1_name,contact1_phone,contact2_name,contact2_phone,contact3_name,contact3_phone,vk_id,interests,prof_experience,prof_plan,prof_orientation,prof_status,prof_income,referer,source,sourceId,http_referer');
 
     if(empty($rest->data['create'])) throw new Exception('Are you sure you want to create new object?',400);
+
 //print $modx->parseChunk('hello_world', array());
     $hours3 = 60 * 60 * 3;
     $time = time() + $hours3;
@@ -82,12 +86,17 @@ try {
         $prop['dob'] = date_timestamp_get(date_create($bd['birth_year'] . "-" . $bd['birth_month'] . "-" . $bd['birth_day']));
     }
 
-    $prop = array_merge($rest->data,$prop);
+    $prop = array_merge($prop,$rest->data);
     unset($prop['birth_year']);
     unset($prop['birth_month']);
     unset($prop['birth_day']);
     $prop['modxuserid'] = $modx->user->id;
 
+    if(DEBUG) {
+        print_r($rest->data);
+        print_r($prop);
+        die;
+    }
     $object = $modx->newObject('StudentCensus');
     foreach ($prop as $k => $v) {
         switch ($k) {
