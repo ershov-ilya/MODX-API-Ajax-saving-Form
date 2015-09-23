@@ -51,7 +51,7 @@ docState.load = function(){
 
     if(typeof Cookies == 'function'){
         var person=Cookies.get('person');
-        person=JSON.parse(person);
+        person=JSON.parse(person || '{}');
         if(this.debug) {
             console.log('Cookies person load done');
             console.log(person);
@@ -261,7 +261,7 @@ apicontrol.validate=function(silent){
                 val=docState.data[required[i]];
                 if((typeof val == 'undefined' || val == '') && $('#'+required[i]).size()) {
                     if(!silent) {
-                        $('#' + synonym.map[required[i]]).after('<span class="error validate-error">Необходимо заполнить</span>').one('change', function () {
+                        $('#' + required[i]).after('<span class="error validate-error">Необходимо заполнить</span>').one('change', function () {
                             $(this).parent().find('.validate-error').remove();
                         });
                     }
