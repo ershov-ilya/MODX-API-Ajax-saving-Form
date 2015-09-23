@@ -7,6 +7,3 @@
 [submodule "anketa/assets/parse-get"]
 	path = anketa/assets/parse-get
 	url = https://github.com/ershov-ilya/parse-get.js.git
-[submodule "anketa/js/js-cookie"]
-	path = anketa/js/js-cookie
-	url = git@github.com:js-cookie/js-cookie.git
