@@ -1,7 +1,7 @@
 /**
  * Created by IErshov on 11.12.2014.
  */
-var docState={data:{},changes:false,debug:false,flagReset:false};
+var docState={data:{},changes:false,debug:true,flagReset:false};
 var apicontrol={
     config:{
         get_keys:['source','sourceId','referer_url']
@@ -235,7 +235,7 @@ apicontrol.update=function(data){
     }).always(success);
 };
 
-apicontrol.checkChanges=function(){
+apicontrol.tick=function(){
     if(docState.debug) console.log('tick');
     if(docState.changes){
         if(docState.debug) console.log('changes found');
@@ -255,8 +255,7 @@ apicontrol.checkChanges=function(){
 
 apicontrol.start=function(){
     if(docState.debug) console.log('apicontrol check changes start...');
-    setInterval(apicontrol.checkChanges, 500);
-    /**/
+    setInterval(apicontrol.tick, 500);
 };
 
 function supports_html5_storage() {

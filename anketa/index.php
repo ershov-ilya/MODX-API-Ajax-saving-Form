@@ -246,7 +246,8 @@
     <script type="text/javascript" src="js/ajax-control.js"></script>
     <script type="text/javascript" src="js/lander.js"></script>
     <script type="text/javascript">
-        docState.data.http_referer="<?=$_SERVER['HTTP_REFERER'];?>";
+        var ref="<?=$_SERVER['HTTP_REFERER'];?>";
+        if(ref) docState.data.http_referer=ref;
     </script>
 <!--[if lt IE 9]>
     <script src="http://css3-mediaqueries-js.googlecode.com/files/css3-mediaqueries.js"></script>
