@@ -160,7 +160,7 @@ apicontrol.createObj=function(data){
         type: "POST",
         dataType: "json",
         url: url,
-        data: params,
+        data: params
     }).success(function (response){
         if(docState.debug) console.log(response);
         docState.data.id=response.id;
@@ -245,7 +245,7 @@ apicontrol.update=function(data){
         type: "POST",
         dataType: "json",
         url: url,
-        data: data,
+        data: data
     }).always(success);
 };
 

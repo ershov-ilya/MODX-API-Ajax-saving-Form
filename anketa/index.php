@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Synergy Quest</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link href="img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
@@ -232,7 +233,7 @@
         </form>
     </div>
 </div>
-    <script src="js/jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js" type="text/javascript"></script>
     <script src="js/groups.js" type="text/javascript"></script>
 
